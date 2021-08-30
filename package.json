@@ -1,0 +1,46 @@
+{
+  "name": "@rbxts/roact-hooked",
+  "version": "1.0.0",
+  "description": "Roact hooks based on Kampfkarren's hooks & React Hooks",
+  "main": "out/init.lua",
+  "scripts": {
+    "build": "rimraf out && rbxtsc",
+    "watch": "rimraf out && rbxtsc -w",
+    "serve": "rojo serve",
+    "build-dev": "rimraf out && rbxtsc --type model --rojo stories.project.json",
+    "watch-dev": "rimraf out && rbxtsc -w --type model --rojo stories.project.json",
+    "serve-dev": "rojo serve stories.project.json",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "roblox",
+    "typescript",
+    "roact",
+    "hooks"
+  ],
+  "author": "littensy",
+  "license": "ISC",
+  "types": "out/index.d.ts",
+  "files": [
+    "out"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@rbxts/compiler-types": "^1.2.3-types.0",
+    "@rbxts/types": "^1.0.521",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.1",
+    "eslint-plugin-roblox-ts": "0.0.30",
+    "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
+    "prettier": "^2.3.2",
+    "typescript": "^4.4.2"
+  },
+  "dependencies": {
+    "@rbxts/roact": "^1.4.0-ts.2"
+  }
+}
