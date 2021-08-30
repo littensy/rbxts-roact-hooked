@@ -1,9 +1,9 @@
+import { dependencies } from "./from-function-component";
 import { prepareHooks, resetHooks } from "../work-in-progress-hook";
 import Roact from "@rbxts/roact";
-import helper from "./from-function-component";
 
-helper.dependencies.Roact = Roact;
-helper.dependencies.prepareHooks = prepareHooks;
-helper.dependencies.resetHooks = resetHooks;
+dependencies.Roact = Roact;
+dependencies.prepareHooks = prepareHooks;
+dependencies.resetHooks = resetHooks;
 
 export { fromFunctionComponent, FunctionComponent } from "./from-function-component";
