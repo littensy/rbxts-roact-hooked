@@ -1,22 +1,23 @@
-import type { Effect, FC, LayoutEffect, LinkedList } from "../index";
+import type { Effect, FC, FunctionComponentConstructor, LayoutEffect, LinkedList } from "../index";
 import type { Hook, prepareHooks, resetHooks } from "../work-in-progress-hook";
 import type Roact from "@rbxts/roact";
 
 export = FromFunctionComponent;
 export as namespace FromFunctionComponent;
 
-declare const FromFunctionComponent: {
-	dependencies: {
+// Main functions
+declare namespace FromFunctionComponent {
+	const dependencies: {
 		Roact: typeof Roact;
 		prepareHooks: typeof prepareHooks;
 		resetHooks: typeof resetHooks;
 	};
 
-	fromFunctionComponent: <P = {}>(
+	function fromFunctionComponent<P = {}>(
 		render: FC<P>,
 		componentType: typeof Roact.Component,
-	) => FromFunctionComponent.FunctionComponentConstructor<P>;
-};
+	): FunctionComponentConstructor<P>;
+}
 
 // Function Component
 declare namespace FromFunctionComponent {
@@ -52,10 +53,5 @@ declare namespace FromFunctionComponent {
 		 * Sets up hooks & calls the render function passed to `create`.
 		 */
 		render(): Roact.Element;
-	}
-
-	interface FunctionComponentConstructor<P = {}> extends Roact.ComponentConstructor<P, FunctionComponentState> {
-		defaultProps: Partial<P>;
-		validateProps?: (props: P) => LuaTuple<[boolean, string?]>;
 	}
 }

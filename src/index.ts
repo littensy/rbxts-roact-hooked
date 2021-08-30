@@ -3,7 +3,7 @@
  */
 
 import * as hooks from "./hooks";
-import { FunctionComponentConstructor, fromFunctionComponent } from "./from-function-component";
+import { fromFunctionComponent } from "./from-function-component";
 import Roact from "@rbxts/roact";
 
 /**
@@ -24,11 +24,7 @@ import Roact from "@rbxts/roact";
  *
  * @see https://reactjs.org/docs/hooks-intro.html
  */
-function FC<
-	T extends Hooked.FC | {},
-	F extends Hooked.FC = T extends Hooked.FC ? T : Hooked.FC<T>,
-	P extends {} = Hooked.InferFCProps<F>,
->(render: F): FunctionComponentConstructor<P> {
+function FC<P = {}>(render: Hooked.FC<P>): Hooked.FunctionComponentConstructor<P> {
 	return fromFunctionComponent<P>(render, Roact.Component);
 }
 
@@ -60,37 +56,20 @@ function FC<
  * @see https://reactjs.org/docs/react-api.html
  * @see https://roblox.github.io/roact/performance/reduce-reconciliation/
  */
-function pure<F extends Hooked.FC<any>, P = Hooked.InferFCProps<F>>(render: F): Roact.ComponentConstructor<P> {
+function pure<P = {}>(render: Hooked.FC<P>): Hooked.FunctionComponentConstructor<P> {
 	return fromFunctionComponent<P>(render, Roact.PureComponent);
 }
-
-const Hooked = {
-	...hooks,
-	FC,
-	pure,
-} as const;
-
-export = Hooked;
 
 // Utility types
 declare namespace Hooked {
 	interface LinkedList<T extends LinkedListNode<any>> {
-		/**
-		 * First node in the list.
-		 */
 		head?: T;
-		/**
-		 * Last node in the list.
-		 */
 		tail?: T;
 	}
 
-	type LinkedListNode<T> = {
-		/**
-		 * The next node in the list.
-		 */
+	interface LinkedListNode<T> {
 		next?: T;
-	};
+	}
 
 	type Destructor = () => void;
 
@@ -131,6 +110,11 @@ declare namespace Hooked {
 		}>;
 	}
 
+	interface FunctionComponentConstructor<P = {}> extends Roact.ComponentConstructor<P, Record<number, unknown>> {
+		defaultProps: Partial<P>;
+		validateProps?: (props: P) => LuaTuple<[boolean, string?]>;
+	}
+
 	interface Effect extends LinkedListNode<Effect> {
 		id: number;
 		callback: EffectCallback;
@@ -141,3 +125,11 @@ declare namespace Hooked {
 		immediate: true;
 	}
 }
+
+const Hooked = {
+	...hooks,
+	FC,
+	pure,
+} as const;
+
+export = Hooked;
