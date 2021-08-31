@@ -60,6 +60,17 @@ function pure<P = {}>(render: Hooked.FC<P>): Hooked.FunctionComponentConstructor
 	return fromFunctionComponent<P>(render, Roact.PureComponent);
 }
 
+/**
+ * Roact implementation of React Hooks
+ */
+const Hooked = {
+	...hooks,
+	FC,
+	pure,
+} as const;
+
+export = Hooked;
+
 // Utility types
 declare namespace Hooked {
 	interface LinkedList<T extends LinkedListNode<any>> {
@@ -125,11 +136,3 @@ declare namespace Hooked {
 		immediate: true;
 	}
 }
-
-const Hooked = {
-	...hooks,
-	FC,
-	pure,
-} as const;
-
-export = Hooked;
