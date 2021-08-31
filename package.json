@@ -4,8 +4,8 @@
   "description": "Roact hooks based on Kampfkarren's hooks & React Hooks",
   "main": "out/init.lua",
   "scripts": {
-    "build": "rimraf out && rbxtsc",
-    "watch": "rimraf out && rbxtsc -w",
+    "build": "rbxtsc && rimraf out/stories/",
+    "watch": "rbxtsc -w",
     "serve": "rojo serve",
     "build-dev": "rimraf out && rbxtsc --type model --rojo stories.project.json",
     "watch-dev": "rimraf out && rbxtsc -w --type model --rojo stories.project.json",
