@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  prebuild:
+    name: Pre-build checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Install Node.js v14
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Run linter
+        run: npx eslint
+        if: success()
+
+  build:
+    name: Build
+    needs: prebuild
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Install Node.js v14
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install foreman
+        uses: Roblox/setup-foreman@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Compile Luau model
+        run: npx rbxtsc --type model --rojo default.project.json
+
+      - name: Build Roblox model
+        run: rojo build -o roact-hooked.rbxmx
+
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: roact-hooked
+          path: ./roact-hooked.rbxmx

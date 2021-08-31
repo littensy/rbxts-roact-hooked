@@ -1,0 +1,35 @@
+name: NPM Publish
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Install Node.js v14
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Download release artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: ci.yml
+          name: roact-hooked
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: false
+          prerelease: false
+          files: roact-hooked.rbxmx
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
