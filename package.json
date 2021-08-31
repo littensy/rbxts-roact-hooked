@@ -21,6 +21,10 @@
   "author": "littensy",
   "license": "ISC",
   "types": "out/index.d.ts",
+  "repository": {
+    "type": "git",
+    "directory": "https://github.com/littensy/rbxts-roact-hooked"
+  },
   "files": [
     "out"
   ],
