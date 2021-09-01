@@ -84,15 +84,7 @@ declare namespace Hooked {
 
 	type Destructor = () => void;
 
-	/**
-	 * A Function Component
-	 */
 	type FC<P = {}> = Roact.FunctionComponent<P>;
-
-	/**
-	 * Extracts the props type from a Function Component
-	 */
-	type InferFCProps<T> = T extends FC<infer P> ? P : never;
 
 	type Dispatch<A> = (action: A) => void;
 	type DispatchWithoutAction = () => void;
@@ -122,7 +114,7 @@ declare namespace Hooked {
 	}
 
 	interface FunctionComponentConstructor<P = {}> extends Roact.ComponentConstructor<P, Record<number, unknown>> {
-		defaultProps: Partial<P>;
+		defaultProps?: Partial<P>;
 		validateProps?: (props: P) => LuaTuple<[boolean, string?]>;
 	}
 
