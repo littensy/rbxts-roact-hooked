@@ -6,39 +6,39 @@ function fromFunctionComponent(render, componentType)
     local resetHooks = dependencies.resetHooks
     local componentClass = componentType:extend(debug.info(render, "n"))
 
-    local effects, layoutEffects, effectHandles = {}, {}, {}
+    function componentClass:init()
+        componentClass.effects = {}
+        componentClass.layoutEffects = {}
+        componentClass.effectHandles = {}
+    end
 
-    componentClass.effects = effects
-    componentClass.layoutEffects = layoutEffects
-    componentClass.effectHandles = effectHandles
-
-    local function flush(effect)
+    function componentClass:flush(effect)
         if (not effect) then return end
-        if effectHandles[effect.id] then
-            effectHandles[effect.id]()
+        if self.effectHandles[effect.id] then
+            self.effectHandles[effect.id]()
         end
-        effectHandles[effect.id] = effect.callback()
+        self.effectHandles[effect.id] = effect.callback()
         flush(effect.next)
     end
 
-    local function flushLayoutEffects()
-        flush(layoutEffects.head)
-        layoutEffects.head = nil
-        layoutEffects.tail = nil
+    function componentClass:flushLayoutEffects()
+        flush(self.layoutEffects.head)
+        self.layoutEffects.head = nil
+        self.layoutEffects.tail = nil
     end
 
-    local function flushEffects()
-        flush(effects.head)
-        effects.head = nil
-        effects.tail = nil
+    function componentClass:flushEffects()
+        flush(self.effects.head)
+        self.effects.head = nil
+        self.effects.tail = nil
         flushLayoutEffects()
     end
 
-    local function cleanupEffects()
-        for _, cleanup in pairs(effectHandles) do
+    function componentClass:cleanupEffects()
+        for _, cleanup in pairs(self.effectHandles) do
             cleanup()
         end
-        table.clear(effectHandles)
+        table.clear(self.effectHandles)
     end
 
     function componentClass:setHookState(id, reducer)
@@ -65,8 +65,8 @@ function fromFunctionComponent(render, componentType)
 
     function componentClass:willUnmount()
         cleanupEffects()
-        effects.head = nil
-        layoutEffects.head = nil
+        self.effects.head = nil
+        self.layoutEffects.head = nil
     end
 
     return componentClass
