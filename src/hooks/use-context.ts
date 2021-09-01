@@ -6,8 +6,7 @@ import { createWorkInProgressHook, resolveCurrentComponent } from "../work-in-pr
 import { useEffect } from "./use-effect";
 import { useState } from "./use-state";
 import Roact from "@rbxts/roact";
-import type { Destructor } from "../index";
-import type { RoactContext } from "../index";
+import type { Destructor, RoactContext } from "../index";
 
 interface RoactContextInternal<T> extends RoactContext<T> {
 	Consumer: ConsumerConstructor<T>;
@@ -18,7 +17,7 @@ interface ConsumerConstructor<T>
 		render: (value: T) => Roact.Element | undefined;
 	}> {
 	contextEntry: ContextEntry<T>;
-	init: (self: ConsumerConstructor<any>, props?: Roact.Component) => void;
+	init: (self: ConsumerConstructor<T>, props?: Roact.Component) => void;
 }
 
 interface ContextEntry<T> {
@@ -40,13 +39,14 @@ function copyComponent<T>(component: Roact.Component) {
  */
 export function useContext<T>(context: RoactContext<T>): T {
 	const thisContext = context as RoactContextInternal<T>;
-	const { state: consumer } = createWorkInProgressHook(() => copyComponent<T>(resolveCurrentComponent()));
 
-	thisContext.Consumer.init(consumer);
+	const { state: contextEntry } = createWorkInProgressHook(() => {
+		const consumer = copyComponent<T>(resolveCurrentComponent());
+		thisContext.Consumer.init(consumer);
+		return consumer.contextEntry;
+	});
 
-	const { contextEntry } = consumer;
 	const [value, setValue] = useState(contextEntry.value);
-
 	useEffect(() => contextEntry.onUpdate.subscribe(setValue), []);
 
 	return value;
