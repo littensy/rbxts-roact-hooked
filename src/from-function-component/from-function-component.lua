@@ -18,20 +18,20 @@ function fromFunctionComponent(render, componentType)
             self.effectHandles[effect.id]()
         end
         self.effectHandles[effect.id] = effect.callback()
-        flush(effect.next)
+        self:flush(effect.next)
     end
 
     function componentClass:flushLayoutEffects()
-        flush(self.layoutEffects.head)
+        self:flush(self.layoutEffects.head)
         self.layoutEffects.head = nil
         self.layoutEffects.tail = nil
     end
 
     function componentClass:flushEffects()
-        flush(self.effects.head)
+        self:flush(self.effects.head)
         self.effects.head = nil
         self.effects.tail = nil
-        flushLayoutEffects()
+        self:flushLayoutEffects()
     end
 
     function componentClass:cleanupEffects()
@@ -51,20 +51,20 @@ function fromFunctionComponent(render, componentType)
         prepareHooks(self)
         local element = render(self.props)
         resetHooks(self)
-        flushLayoutEffects()
+        self:flushLayoutEffects()
         return element
     end
 
     function componentClass:didMount()
-        flushEffects()
+        self:flushEffects()
     end
 
     function componentClass:didUpdate()
-        flushEffects()
+        self:flushEffects()
     end
 
     function componentClass:willUnmount()
-        cleanupEffects()
+        self:cleanupEffects()
         self.effects.head = nil
         self.layoutEffects.head = nil
     end
