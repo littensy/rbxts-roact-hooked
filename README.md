@@ -7,32 +7,28 @@ Roact hooks based on [Kampfkarren's hooks](https://github.com/Kampfkarren/roact-
 ## Usage
 
 ```tsx
-import Hooked, { useEffect, useState } from "../index";
+import Hooked, { useEffect, useState } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
 
 interface MyComponentProps {
-	name: string;
+  name?: string;
 }
 
-export const MyComponent = Hooked.FC<MyComponentProps>((props) => {
-	const [count, setCount] = useState(0);
+export const MyComponent = Hooked.FC<MyComponentProps(({ name = "David Baszucki" }) => {
+  const [count, setCount] = useState(0);
 
-	useEffect(() => {
-		print("Counter: " + count);
-	}, [count]);
+  useEffect(() => {
+    print("Counter: " + count);
+  }, [count]);
 
-	return (
-		<textbutton
-			Size={new UDim2(1, 0, 1, 0)}
-			Text={`${props.name} pressed ${count} times`}
-			Event={{
-				Activated: () => setCount((value) => value + 1),
-			}}
-		/>
-	);
+  return (
+    <textbutton
+      Size={new UDim2(1, 0, 1, 0)}
+      Text={`${name} pressed ${count} times`}
+      Event={{
+        Activated: () => setCount((value) => value + 1),
+      }}
+    />
+  );
 });
-
-MyComponent.defaultProps = {
-	name: "David Baszucki",
-};
 ```
