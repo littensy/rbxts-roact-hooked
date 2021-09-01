@@ -35,6 +35,10 @@ export function resolveCurrentComponent(): FunctionComponent {
  * Prepares for an upcoming render.
  */
 export function prepareHooks(component: FunctionComponent) {
+	assert(
+		currentlyRenderingComponent === undefined,
+		"Failed to render function component! (Another function component is rendering)",
+	);
 	currentlyRenderingComponent = component;
 }
 
@@ -45,7 +49,7 @@ export function resetHooks(component?: FunctionComponent) {
 	if (component) {
 		assert(
 			currentlyRenderingComponent === component,
-			"A component was rendered while this component was still rendering!",
+			"Failed to render function component! (Another function component rendered during process)",
 		);
 	}
 	currentlyRenderingComponent = undefined;
