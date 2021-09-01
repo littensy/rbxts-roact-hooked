@@ -8,8 +8,12 @@ import { useState } from "./use-state";
 import Roact from "@rbxts/roact";
 import type { Destructor, RoactContext } from "../index";
 
-interface RoactContextInternal<T> extends RoactContext<T> {
+interface RoactContextInternal<T> {
+	Provider: Roact.ComponentConstructor<{
+		value: T;
+	}>;
 	Consumer: ConsumerConstructor<T>;
+	defaultValue: T;
 }
 
 interface ConsumerConstructor<T>
@@ -46,8 +50,11 @@ export function useContext<T>(context: RoactContext<T>): T {
 		return consumer.contextEntry;
 	});
 
-	const [value, setValue] = useState(contextEntry.value);
-	useEffect(() => contextEntry.onUpdate.subscribe(setValue), []);
-
-	return value;
+	if (contextEntry) {
+		const [value, setValue] = useState(contextEntry.value);
+		useEffect(() => contextEntry.onUpdate.subscribe(setValue), []);
+		return value;
+	} else {
+		return thisContext.defaultValue;
+	}
 }
