@@ -1,5 +1,16 @@
-# Next
+# Latest
 
+# v1.1.1
+
+## Development
+
+❌ Remove `useLayoutEffect` in favor of synchronous `useEffect` 
+ - Remove `useLayoutEffect` 5569930f9de3d81188821732cf60c2ab67cae511 @littensy
+
+## Bug Fixes
+
+ - Initialize `self` instead of `componentClass` 3fa442c3df73c2d542e938709c69982cd7059d01 @littensy
+ 
 # v1.1.0
 
 ## New Features
