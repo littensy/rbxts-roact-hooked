@@ -22,8 +22,6 @@ function scheduleEffect(effect: Effect): Effect {
  * leaks. Additionally, if a component renders multiple times, the **previous effect is cleaned up before executing
  * the next effect**.
  *
- * `useEffect` runs in the same phase as `didMount` and `didUpdate`. All cleanup functions are called on `willUnmount`.
- *
  * @example
  * useEffect(() => {
  *   // use value
