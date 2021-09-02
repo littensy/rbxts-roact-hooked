@@ -94,7 +94,6 @@ declare namespace Hooked {
 		? S
 		: never;
 
-	type SetStateReducer<S> = Reducer<S, SetStateAction<S>>;
 	type SetStateAction<S> = S | ((prevState: S) => S);
 
 	type DependencyList = ReadonlyArray<unknown>;
@@ -118,9 +117,5 @@ declare namespace Hooked {
 		id: number;
 		callback: EffectCallback;
 		deps?: DependencyList;
-	}
-
-	interface LayoutEffect extends Effect {
-		immediate: true;
 	}
 }

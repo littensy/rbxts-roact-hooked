@@ -8,7 +8,6 @@ function fromFunctionComponent(render, componentType)
 
     function componentClass:init()
         self.effects = {}
-        self.layoutEffects = {}
         self.effectHandles = {}
     end
 
@@ -21,17 +20,10 @@ function fromFunctionComponent(render, componentType)
         self:flush(effect.next)
     end
 
-    function componentClass:flushLayoutEffects()
-        self:flush(self.layoutEffects.head)
-        self.layoutEffects.head = nil
-        self.layoutEffects.tail = nil
-    end
-
     function componentClass:flushEffects()
         self:flush(self.effects.head)
         self.effects.head = nil
         self.effects.tail = nil
-        self:flushLayoutEffects()
     end
 
     function componentClass:cleanupEffects()
@@ -48,7 +40,6 @@ function fromFunctionComponent(render, componentType)
     end
 
     function componentClass:render()
-        self:flushEffects()
         prepareHooks(self)
         local element = render(self.props)
         resetHooks(self)
@@ -56,23 +47,16 @@ function fromFunctionComponent(render, componentType)
     end
 
     function componentClass:didMount()
-        self:flushLayoutEffects()
-        task.delay(0, function ()
-            self:flushEffects()
-        end)
+        self:flushEffects()
     end
 
     function componentClass:didUpdate()
-        self:flushLayoutEffects()
-        task.delay(0, function ()
-            self:flushEffects()
-        end)
+        self:flushEffects()
     end
 
     function componentClass:willUnmount()
         self:cleanupEffects()
         self.effects.head = nil
-        self.layoutEffects.head = nil
     end
 
     return componentClass

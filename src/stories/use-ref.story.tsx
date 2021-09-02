@@ -1,4 +1,4 @@
-import Hooked, { useEffect, useLayoutEffect, useRef } from "../index";
+import Hooked, { useEffect, useRef } from "../index";
 import Roact from "@rbxts/roact";
 
 const Clipboard = Hooked.FC(() => {
@@ -8,13 +8,6 @@ const Clipboard = Hooked.FC(() => {
 		const input = ref.getValue();
 		if (input) {
 			input.CaptureFocus();
-			print(input.Parent);
-		}
-	}, []);
-
-	useLayoutEffect(() => {
-		const input = ref.getValue();
-		if (input) {
 			print(input.Parent);
 		}
 	}, []);

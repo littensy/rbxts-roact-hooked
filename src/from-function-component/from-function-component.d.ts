@@ -1,4 +1,4 @@
-import type { Effect, FC, FunctionComponentConstructor, LayoutEffect, LinkedList } from "../index";
+import type { Effect, FC, FunctionComponentConstructor, LinkedList } from "../index";
 import type { Hook, prepareHooks, resetHooks } from "../work-in-progress-hook";
 import type Roact from "@rbxts/roact";
 
@@ -35,11 +35,6 @@ declare namespace FromFunctionComponent {
 		 * A linked list of effects.
 		 */
 		readonly effects: LinkedList<Effect>;
-
-		/**
-		 * A linked list of layout effects.
-		 */
-		readonly layoutEffects: LinkedList<LayoutEffect>;
 
 		/**
 		 * Sets the memoized state of a hook. Calls the updater function with the current state.

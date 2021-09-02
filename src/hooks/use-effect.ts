@@ -16,11 +16,13 @@ function scheduleEffect(effect: Effect): Effect {
 
 /**
  * Accepts a function that contains imperative, possibly effectful code. The function passed to `useEffect` will run
- * asynchronously (deferred) after the render is committed to the screen.
+ * synchronously (thread-blocking) after the Roblox Instance is created and rendered.
  *
  * The clean-up function (returned by the effect) runs before the component is removed from the UI to prevent memory
  * leaks. Additionally, if a component renders multiple times, the **previous effect is cleaned up before executing
  * the next effect**.
+ *
+ *`useEffect` runs in the same phase as `didMount` and `didUpdate`. All cleanup functions are called on `willUnmount`.
  *
  * @example
  * useEffect(() => {
