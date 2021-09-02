@@ -23,7 +23,10 @@
   "types": "out/index.d.ts",
   "repository": {
     "type": "git",
-    "directory": "https://github.com/littensy/rbxts-roact-hooked"
+    "url": "https://github.com/littensy/rbxts-roact-hooked.git"
+  },
+  "bugs": {
+    "url": "https://github.com/littensy/rbxts-roact-hooked/issues/"
   },
   "files": [
     "out"
