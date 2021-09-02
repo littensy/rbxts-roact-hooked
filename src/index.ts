@@ -10,14 +10,12 @@ import Roact from "@rbxts/roact";
  * `Hooked.FC` is a [higher-order component](https://reactjs.org/docs/higher-order-components.html) that turns your
  * function component into a [Roact Component](https://roblox.github.io/roact/guide/components/).
  *
- * @example ```
- * const MyComponent = Hooked.FC(
- *   (props: Props) => {
+ * @example
+ * const MyComponent = Hooked.FC<Props>(
+ *   (props) => {
  *     // render using props
  *   },
  * );
- * MyComponent.defaultProps = {};
- * ```
  *
  * @param render - Function component to wrap
  * @returns A Component class
@@ -41,14 +39,12 @@ function FC<P = {}>(render: Hooked.FC<P>): Hooked.FunctionComponentConstructor<P
  * {@link useState}, {@link useReducer} or {@link useContext} Hook in its implementation, it will still rerender when
  * state or context change.
  *
- * @example ```
- * const MyComponent = Hooked.pure(
- *   (props: Props) => {
+ * @example
+ * const MyComponent = Hooked.pure<Props>(
+ *   (props) => {
  *     // render using props
  *   },
  * );
- * MyComponent.defaultProps = {};
- * ```
  *
  * @param render - Function component to wrap in a Roact PureComponent
  * @returns A PureComponent class
