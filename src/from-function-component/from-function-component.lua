@@ -48,19 +48,25 @@ function fromFunctionComponent(render, componentType)
     end
 
     function componentClass:render()
+        self:flushEffects()
         prepareHooks(self)
         local element = render(self.props)
         resetHooks(self)
-        self:flushLayoutEffects()
         return element
     end
 
     function componentClass:didMount()
-        self:flushEffects()
+        self:flushLayoutEffects()
+        task.delay(0, function ()
+            self:flushEffects()
+        end)
     end
 
     function componentClass:didUpdate()
-        self:flushEffects()
+        self:flushLayoutEffects()
+        task.delay(0, function ()
+            self:flushEffects()
+        end)
     end
 
     function componentClass:willUnmount()
