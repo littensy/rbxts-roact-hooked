@@ -7,9 +7,9 @@ function fromFunctionComponent(render, componentType)
     local componentClass = componentType:extend(debug.info(render, "n"))
 
     function componentClass:init()
-        componentClass.effects = {}
-        componentClass.layoutEffects = {}
-        componentClass.effectHandles = {}
+        self.effects = {}
+        self.layoutEffects = {}
+        self.effectHandles = {}
     end
 
     function componentClass:flush(effect)
