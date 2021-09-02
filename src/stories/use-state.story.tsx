@@ -3,7 +3,10 @@ import Roact from "@rbxts/roact";
 
 const Counter = Hooked.FC(() => {
 	const [counter1, setCounter1] = useState(1);
-	const [counter2, setCounter2] = useState(10);
+	const [counter2, setCounter2] = useState(() => {
+		print("expensive counter2");
+		return 10;
+	});
 
 	return (
 		<frame BackgroundTransparency={1} Size={UDim2.fromScale(1, 1)}>
