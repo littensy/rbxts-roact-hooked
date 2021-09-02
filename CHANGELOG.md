@@ -1,5 +1,7 @@
 # Next
 
+# v1.1.0
+
 ## New Features
 
 🌟 Add `useRef` Hook to memoize `createRef`
