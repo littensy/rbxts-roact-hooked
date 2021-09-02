@@ -8,7 +8,7 @@ import { useState } from "./use-state";
 import Roact from "@rbxts/roact";
 import type { Destructor, RoactContext } from "../index";
 
-interface RoactContextInternal<T> {
+interface ContextInternal<T> {
 	Provider: Roact.ComponentConstructor<{
 		value: T;
 	}>;
@@ -36,13 +36,19 @@ function copyComponent<T>(component: Roact.Component) {
 }
 
 /**
- * Accepts a context object (the value returned from `Roact.createContext`) and returns the current
- * context value, as given by the nearest context provider for the given context.
+ * Accepts a context object (the value returned from `Roact.createContext`) and returns the current context value, as
+ * given by the nearest context provider for the given context.
+ *
+ * When the nearest Provider above the component updates, this Hook will trigger a rerender with the latest context
+ * value.
+ *
+ * @param context - The Context object to read from
+ * @returns The latest context value of the nearest Provider
  *
  * @see https://reactjs.org/docs/hooks-reference.html#usecontext
  */
 export function useContext<T>(context: RoactContext<T>): T {
-	const thisContext = context as RoactContextInternal<T>;
+	const thisContext = context as ContextInternal<T>;
 
 	const { state: contextEntry } = createWorkInProgressHook(() => {
 		const consumer = copyComponent<T>(resolveCurrentComponent());
