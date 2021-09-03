@@ -1,6 +1,6 @@
 local dependencies = {}
 
-function fromFunctionComponent(render, componentType)
+function hookComponent(render, componentType)
     local roact = dependencies.roact
     local prepareHooks = dependencies.prepareHooks
     local resetHooks = dependencies.resetHooks
@@ -41,9 +41,12 @@ function fromFunctionComponent(render, componentType)
 
     function componentClass:render()
         prepareHooks(self)
-        local element = render(self.props)
+        local ok, result = pcall(render, self.props)
         resetHooks(self)
-        return element
+        if not ok then
+            error(result, 2)
+        end
+        return result
     end
 
     function componentClass:didMount()
@@ -64,5 +67,5 @@ end
 
 return {
     dependencies = dependencies,
-    fromFunctionComponent = fromFunctionComponent,
+    hookComponent = hookComponent,
 }
