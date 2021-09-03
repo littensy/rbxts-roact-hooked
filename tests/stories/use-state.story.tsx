@@ -1,27 +1,12 @@
-import Hooked, { useReducer } from "../index";
+import { hooked, useState } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
 
-interface State {
-	count: number;
-}
-
-type Action = { type: "increment" } | { type: "decrement" };
-
-const initialState: State = { count: 0 };
-
-function reducer({ count }: State, { type: actionType }: Action) {
-	switch (actionType) {
-		case "increment":
-			return { count: count + 1 };
-		case "decrement":
-			return { count: count - 1 };
-		default:
-			error(`Unknown type: ${actionType}`);
-	}
-}
-
-const Counter = Hooked.FC(() => {
-	const [state, dispatch] = useReducer(reducer, initialState);
+const Counter = hooked(() => {
+	const [counter1, setCounter1] = useState(1);
+	const [counter2, setCounter2] = useState(() => {
+		print("expensive counter2");
+		return 10;
+	});
 
 	return (
 		<frame BackgroundTransparency={1} Size={UDim2.fromScale(1, 1)}>
@@ -35,7 +20,7 @@ const Counter = Hooked.FC(() => {
 				Font={Enum.Font.Code}
 				LayoutOrder={1}
 				Size={new UDim2(1, 0, 0, 38)}
-				Text={tostring(state.count)}
+				Text={`${counter1}/${counter2}`}
 				TextColor3={new Color3(0, 1, 0)}
 				TextSize={32}
 			/>
@@ -44,11 +29,11 @@ const Counter = Hooked.FC(() => {
 				Font={Enum.Font.Code}
 				LayoutOrder={2}
 				Size={new UDim2(1, 0, 0, 38)}
-				Text={"Increment"}
+				Text={"Increase counter 1"}
 				TextColor3={new Color3(1, 1, 1)}
 				TextScaled={true}
 				Event={{
-					Activated: () => dispatch({ type: "increment" }),
+					Activated: () => setCounter1((counter) => counter + 1),
 				}}
 			/>
 			<textbutton
@@ -56,11 +41,11 @@ const Counter = Hooked.FC(() => {
 				Font={Enum.Font.Code}
 				LayoutOrder={3}
 				Size={new UDim2(1, 0, 0, 38)}
-				Text={"Decrement"}
+				Text={"Increase counter 2"}
 				TextColor3={new Color3(1, 1, 1)}
 				TextScaled={true}
 				Event={{
-					Activated: () => dispatch({ type: "decrement" }),
+					Activated: () => setCounter2(counter2 + 1),
 				}}
 			/>
 		</frame>

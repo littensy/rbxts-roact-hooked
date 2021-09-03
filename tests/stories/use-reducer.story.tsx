@@ -1,11 +1,27 @@
-import Hooked, { useMemo, useState } from "../index";
+import { hooked, useReducer } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
 
-const WorldsWorstClock = Hooked.FC(() => {
-	const [unrelated, setUnrelated] = useState(0);
-	const [updater, setUpdater] = useState(0);
+interface State {
+	count: number;
+}
 
-	const currentTime = useMemo(() => os.clock(), [updater]);
+type Action = { type: "increment" } | { type: "decrement" };
+
+const initialState: State = { count: 0 };
+
+function reducer({ count }: State, { type: actionType }: Action) {
+	switch (actionType) {
+		case "increment":
+			return { count: count + 1 };
+		case "decrement":
+			return { count: count - 1 };
+		default:
+			error(`Unknown type: ${actionType}`);
+	}
+}
+
+const Counter = hooked(() => {
+	const [state, dispatch] = useReducer(reducer, initialState);
 
 	return (
 		<frame BackgroundTransparency={1} Size={UDim2.fromScale(1, 1)}>
@@ -19,7 +35,7 @@ const WorldsWorstClock = Hooked.FC(() => {
 				Font={Enum.Font.Code}
 				LayoutOrder={1}
 				Size={new UDim2(1, 0, 0, 38)}
-				Text={"The current time might be " + currentTime}
+				Text={tostring(state.count)}
 				TextColor3={new Color3(0, 1, 0)}
 				TextSize={32}
 			/>
@@ -28,11 +44,11 @@ const WorldsWorstClock = Hooked.FC(() => {
 				Font={Enum.Font.Code}
 				LayoutOrder={2}
 				Size={new UDim2(1, 0, 0, 38)}
-				Text={"Um..."}
+				Text={"Increment"}
 				TextColor3={new Color3(1, 1, 1)}
 				TextScaled={true}
 				Event={{
-					Activated: () => setUnrelated(unrelated + 1),
+					Activated: () => dispatch({ type: "increment" }),
 				}}
 			/>
 			<textbutton
@@ -40,11 +56,11 @@ const WorldsWorstClock = Hooked.FC(() => {
 				Font={Enum.Font.Code}
 				LayoutOrder={3}
 				Size={new UDim2(1, 0, 0, 38)}
-				Text={"New time, please"}
+				Text={"Decrement"}
 				TextColor3={new Color3(1, 1, 1)}
 				TextScaled={true}
 				Event={{
-					Activated: () => setUpdater(updater + 1),
+					Activated: () => dispatch({ type: "decrement" }),
 				}}
 			/>
 		</frame>
@@ -52,7 +68,7 @@ const WorldsWorstClock = Hooked.FC(() => {
 });
 
 export = (target: Frame) => {
-	const handle = Roact.mount(<WorldsWorstClock />, target, "WorldsWorstClock");
+	const handle = Roact.mount(<Counter />, target, "Counter");
 
 	return () => Roact.unmount(handle);
 };

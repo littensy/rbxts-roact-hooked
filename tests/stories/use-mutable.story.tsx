@@ -1,13 +1,15 @@
-import Hooked, { useState } from "index";
+import { hooked, useEffect, useMutable, useState } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
 
-function increment(value: number) {
-	return ++value;
-}
+const WorldsWorstStopwatch = hooked(() => {
+	const [updater, setUpdater] = useState(0);
+	const stopwatch = useMutable(0);
 
-const Counter = Hooked.FC(() => {
-	const [counter1, setCounter1] = useState(() => 1);
-	const [counter2, setCounter2] = useState(() => 10);
+	useEffect(() => {
+		const connection = game.GetService("RunService").Heartbeat.Connect((step) => (stopwatch.current += step));
+
+		return () => connection.Disconnect();
+	});
 
 	return (
 		<frame BackgroundTransparency={1} Size={UDim2.fromScale(1, 1)}>
@@ -21,32 +23,20 @@ const Counter = Hooked.FC(() => {
 				Font={Enum.Font.Code}
 				LayoutOrder={1}
 				Size={new UDim2(1, 0, 0, 38)}
-				Text={`${counter1}/${counter2}`}
+				Text={"The stopwatch is at " + stopwatch.current}
 				TextColor3={new Color3(0, 1, 0)}
 				TextSize={32}
 			/>
 			<textbutton
 				BackgroundColor3={new Color3(1, 0, 0)}
 				Font={Enum.Font.Code}
-				LayoutOrder={2}
-				Size={new UDim2(1, 0, 0, 38)}
-				Text={"Increase counter 1"}
-				TextColor3={new Color3(1, 1, 1)}
-				TextScaled={true}
-				Event={{
-					Activated: () => setCounter1(increment),
-				}}
-			/>
-			<textbutton
-				BackgroundColor3={new Color3(1, 0, 0)}
-				Font={Enum.Font.Code}
 				LayoutOrder={3}
 				Size={new UDim2(1, 0, 0, 38)}
-				Text={"Increase counter 2"}
+				Text={"Check new time"}
 				TextColor3={new Color3(1, 1, 1)}
 				TextScaled={true}
 				Event={{
-					Activated: () => setCounter2(increment),
+					Activated: () => setUpdater(updater + 1),
 				}}
 			/>
 		</frame>
@@ -54,7 +44,7 @@ const Counter = Hooked.FC(() => {
 });
 
 export = (target: Frame) => {
-	const handle = Roact.mount(<Counter />, target, "Counter");
+	const handle = Roact.mount(<WorldsWorstStopwatch />, target, "WorldsWorstClock");
 
 	return () => Roact.unmount(handle);
 };

@@ -4,13 +4,13 @@
   "description": "Roact hooks based on Kampfkarren's hooks & React Hooks",
   "main": "out/init.lua",
   "scripts": {
-    "build": "rbxtsc && rimraf out/stories/",
+    "build": "rbxtsc",
     "watch": "rbxtsc -w",
-    "serve": "rojo serve",
-    "build-dev": "rimraf out && rbxtsc --type model --rojo stories.project.json",
-    "watch-dev": "rimraf out && rbxtsc -w --type model --rojo stories.project.json",
-    "serve-dev": "rojo serve stories.project.json",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "build:tests": "rbxtsc --type=model -p ./tests -i ./include",
+    "watch:tests": "rbxtsc -w --type=model -p ./tests -i ./include",
+    "serve:tests": "rojo serve ./tests/default.project.json",
+    "dev:tests": "concurrently npm:watch:tests npm:serve:tests"
   },
   "keywords": [
     "roblox",
@@ -19,7 +19,8 @@
     "hooks"
   ],
   "author": "littensy",
-  "license": "ISC",
+  "contributors": ["Spectrius"],
+  "license": "MIT",
   "types": "out/index.d.ts",
   "repository": {
     "type": "git",

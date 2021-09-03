@@ -1,7 +1,7 @@
-import Hooked, { useEffect, useState } from "../index";
+import { hooked, useEffect, useState } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
 
-const Counter = Hooked.FC(() => {
+const Counter = hooked(() => {
 	const [state, setState] = useState(1);
 
 	print("This number should not repeat: " + state);

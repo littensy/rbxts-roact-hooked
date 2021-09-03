@@ -1,10 +1,10 @@
-import Hooked, { useContext, useState } from "../index";
+import { hooked, useContext, useState } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
 
 const CounterContext1 = Roact.createContext<{ counter: number; increment: () => void }>(undefined!);
 const CounterContext2 = Roact.createContext<{ counter: number; increment: () => void }>(undefined!);
 
-const Consumer = Hooked.FC(() => {
+const Consumer = hooked(() => {
 	const counter1 = useContext(CounterContext1);
 	const counter2 = useContext(CounterContext2);
 
@@ -52,7 +52,7 @@ const Consumer = Hooked.FC(() => {
 	);
 });
 
-const App = Hooked.FC(() => {
+const App = hooked(() => {
 	const [counter1, setCounter1] = useState(5);
 	const [counter2, setCounter2] = useState(5);
 

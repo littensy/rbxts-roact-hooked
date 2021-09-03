@@ -1,15 +1,13 @@
-import Hooked, { useEffect, useState, useValue } from "index";
+import { hooked, useState } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
 
-const WorldsWorstStopwatch = Hooked.FC(() => {
-	const [updater, setUpdater] = useState(0);
-	const stopwatch = useValue(0);
+function increment(value: number) {
+	return value + 1;
+}
 
-	useEffect(() => {
-		const connection = game.GetService("RunService").Heartbeat.Connect((step) => (stopwatch.current += step));
-
-		return () => connection.Disconnect();
-	});
+const Counter = hooked(() => {
+	const [counter1, setCounter1] = useState(() => 1);
+	const [counter2, setCounter2] = useState(() => 10);
 
 	return (
 		<frame BackgroundTransparency={1} Size={UDim2.fromScale(1, 1)}>
@@ -23,20 +21,32 @@ const WorldsWorstStopwatch = Hooked.FC(() => {
 				Font={Enum.Font.Code}
 				LayoutOrder={1}
 				Size={new UDim2(1, 0, 0, 38)}
-				Text={"The stopwatch is at " + stopwatch.current}
+				Text={`${counter1}/${counter2}`}
 				TextColor3={new Color3(0, 1, 0)}
 				TextSize={32}
 			/>
 			<textbutton
 				BackgroundColor3={new Color3(1, 0, 0)}
 				Font={Enum.Font.Code}
-				LayoutOrder={3}
+				LayoutOrder={2}
 				Size={new UDim2(1, 0, 0, 38)}
-				Text={"Check new time"}
+				Text={"Increase counter 1"}
 				TextColor3={new Color3(1, 1, 1)}
 				TextScaled={true}
 				Event={{
-					Activated: () => setUpdater(updater + 1),
+					Activated: () => setCounter1(increment),
+				}}
+			/>
+			<textbutton
+				BackgroundColor3={new Color3(1, 0, 0)}
+				Font={Enum.Font.Code}
+				LayoutOrder={3}
+				Size={new UDim2(1, 0, 0, 38)}
+				Text={"Increase counter 2"}
+				TextColor3={new Color3(1, 1, 1)}
+				TextScaled={true}
+				Event={{
+					Activated: () => setCounter2(increment),
 				}}
 			/>
 		</frame>
@@ -44,7 +54,7 @@ const WorldsWorstStopwatch = Hooked.FC(() => {
 });
 
 export = (target: Frame) => {
-	const handle = Roact.mount(<WorldsWorstStopwatch />, target, "WorldsWorstClock");
+	const handle = Roact.mount(<Counter />, target, "Counter");
 
 	return () => Roact.unmount(handle);
 };

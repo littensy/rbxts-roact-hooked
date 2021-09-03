@@ -13,18 +13,25 @@
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
 		"target": "ESNext",
-		"typeRoots": ["node_modules/@rbxts"],
+		"typeRoots": ["../node_modules/@rbxts"],
 
 		// configurable
-		"rootDir": "src",
-		"outDir": "out",
-		"baseUrl": "src",
+		"paths": {
+			"@rbxts/roact-hooked": ["../src"],
+			"@rbxts/roact-hooked/*": ["../src/*"]
+		},
+		"rootDirs": [
+			"stories",
+			"../src",
+		],
+		"outDir": "dist",
+		"baseUrl": ".",
 		"incremental": true,
-		"tsBuildInfoFile": "out/tsconfig.tsbuildinfo",
+		//"tsBuildInfoFile": "out/tsconfig.tsbuildinfo",
 		"declaration": true
 	},
-	"exclude": [
-		"tests/**/*",
-		"out"
+	"include": [
+		"**/*",
+		"../src/**/*"
 	]
 }

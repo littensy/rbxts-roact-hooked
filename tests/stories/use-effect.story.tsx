@@ -1,7 +1,7 @@
-import Hooked, { useEffect, useState } from "../index";
+import { hooked, useEffect, useState } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
 
-const PrintingButton = Hooked.FC(() => {
+const PrintingButton = hooked(() => {
 	const [counter, setCounter] = useState(0);
 	const [lonerCounter, setLonerCounter] = useState(0);
 

@@ -1,0 +1,20 @@
+{
+	"name": "roact-hooks-ts",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"rbxts_include": {
+				"$path": "../include",
+				"node_modules": {
+					"$path": "../node_modules/@rbxts",
+					"roact-hooked": {
+						"$path": "dist/src"
+					}
+				}
+			},
+			"stories": {
+				"$path": "dist/tests/stories"
+			}
+		}
+	}
+}

@@ -1,9 +1,9 @@
-import Hooked, { useBinding, useEffect } from "../index";
+import { hooked, useBinding, useEffect } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
 
 const RunService = game.GetService("RunService");
 
-const Stopwatch = Hooked.FC(() => {
+const Stopwatch = hooked(() => {
 	const [timer, setTimer] = useBinding(0);
 
 	useEffect(() => {
