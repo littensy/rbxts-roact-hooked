@@ -6,7 +6,7 @@ import { createWorkInProgressHook, resolveCurrentComponent } from "../work-in-pr
 import { useEffect } from "./use-effect";
 import { useState } from "./use-state";
 import Roact from "@rbxts/roact";
-import type { Destructor, RoactContext } from "../index";
+import type { Destructor, RoactContext } from "../types";
 
 interface ContextInternal<T> {
 	Provider: Roact.ComponentConstructor<{
@@ -39,8 +39,10 @@ function copyComponent<T>(component: Roact.Component) {
  * Accepts a context object (the value returned from `Roact.createContext`) and returns the current context value, as
  * given by the nearest context provider for the given context.
  *
- * When the nearest Provider above the component updates, this Hook will trigger a rerender with the latest context
- * value.
+ * When the nearest `Context.Provider` above the component updates, this Hook will trigger a rerender with the latest
+ * context value.
+ *
+ * If there is no Provider, `useContext` returns the default value of the context.
  *
  * @param context - The Context object to read from
  * @returns The latest context value of the nearest Provider

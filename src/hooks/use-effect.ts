@@ -1,6 +1,6 @@
 import { areDepsEqual } from "../are-deps-equal";
 import { createWorkInProgressHook, resolveCurrentComponent } from "../work-in-progress-hook";
-import type { DependencyList, Effect, EffectCallback } from "../index";
+import type { DependencyList, Effect, EffectCallback } from "../types";
 
 function scheduleEffect(effect: Effect): Effect {
 	const { effects } = resolveCurrentComponent();

@@ -1,5 +1,5 @@
 import { useMemo } from "./use-memo";
-import type { DependencyList } from "../index";
+import type { DependencyList } from "../types";
 
 /**
  * Returns a memoized version of the callback that only changes if one of the dependencies has changed.

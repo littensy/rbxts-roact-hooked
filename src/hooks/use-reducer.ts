@@ -1,5 +1,4 @@
-import { createWorkInProgressHook, resolveCurrentComponent } from "../work-in-progress-hook";
-import type {
+import {
 	Dispatch,
 	DispatchWithoutAction,
 	Reducer,
@@ -7,7 +6,8 @@ import type {
 	ReducerState,
 	ReducerStateWithoutAction,
 	ReducerWithoutAction,
-} from "../index";
+} from "../types";
+import { createWorkInProgressHook, resolveCurrentComponent } from "../work-in-progress-hook";
 
 /**
  * Accepts a reducer of type `(state, action) => newState`, and returns the current state paired with a `dispatch`
@@ -140,6 +140,8 @@ export function useReducer<R extends Reducer<unknown, unknown>, I>(
 		initializer ? initializer(initializerArg) : (initializerArg as ReducerState<R>),
 	);
 	const dispatch = (action: ReducerAction<R>) => {
+		// If you update a State Hook to the same value as the current state,
+		// this will bail out without rendering the children or firing effects.
 		const nextState = reducer(hook.state, action) as ReducerState<R>;
 		if (hook.state !== nextState) {
 			currentlyRenderingComponent.setHookState(hook.id, () => (hook.state = nextState));

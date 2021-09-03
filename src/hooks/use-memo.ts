@@ -1,6 +1,6 @@
 import { areDepsEqual } from "../are-deps-equal";
 import { createWorkInProgressHook } from "../work-in-progress-hook";
-import type { DependencyList } from "../index";
+import type { DependencyList } from "../types";
 
 /**
  * `useMemo` will only recompute the memoized value when one of the `deps` has changed. This optimization helps to
