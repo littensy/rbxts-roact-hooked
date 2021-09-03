@@ -1,4 +1,4 @@
-# @rbxts/roact-hooked
+# [@rbxts/roact-hooked](https://www.npmjs.com/package/@rbxts/roact-hooked)
 
 Roact hooks based on [Kampfkarren's hooks](https://github.com/Kampfkarren/roact-hooks) & [React Hooks](https://reactjs.org/docs/hooks-intro.html)
 
