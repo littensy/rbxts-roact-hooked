@@ -1,5 +1,21 @@
 # Latest
 
+# v1.2.0
+
+**This is a breaking change!**
+
+## Development
+
+❌ Remove `Hooked` namespace export for `hooked`, `pure` exports 159b9c96a82feb7dbac3f1545ba762096938fe2d @littensy
+
+🔨 Rename `useValue` to `useMutable` 3d7ec8a7d7730bed06b1314498ab21a08371d45d @littensy
+
+🔨 `useState` uses `useReducer` internally 9c463e78ba925096f8ccc7386fd4265a8b6ff8b6 @littensy
+
+## Bug Fixes
+
+ - Clean up if render function throws an error 1ed07b6adf899e78f7cd9902e28b929ffb67e512 @littensy
+
 # v1.1.1
 
 ## Development
