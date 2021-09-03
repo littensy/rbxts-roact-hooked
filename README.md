@@ -7,14 +7,14 @@ Roact hooks based on [Kampfkarren's hooks](https://github.com/Kampfkarren/roact-
 ## Usage
 
 ```tsx
-import Hooked, { useEffect, useState } from "@rbxts/roact-hooked";
+import { hooked, useEffect, useState } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
 
 interface MyComponentProps {
   name?: string;
 }
 
-export const MyComponent = Hooked.FC<MyComponentProps>(({ name = "David Baszucki" }) => {
+export const MyComponent = hooked<MyComponentProps>(({ name = "David Baszucki" }) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
