@@ -1,9 +1,7 @@
-import { createWorkInProgressHook, resolveCurrentComponent } from "../work-in-progress-hook";
-import type { Dispatch, SetStateAction } from "../index";
+import { useReducer } from "./use-reducer";
+import type { Dispatch } from "../types";
 
-const setStateReducer = <S>(state: S, action: SetStateAction<S>): S => {
-	return typeIs(action, "function") ? action(state) : action;
-};
+type SetStateAction<S> = S | ((prevState: S) => S);
 
 /**
  * Returns a stateful value, and a function to update it.
@@ -79,15 +77,12 @@ export function useState<S = undefined>(
  * @see https://reactjs.org/docs/hooks-reference.html#usestate
  */
 export function useState<S>(initialState: S | (() => S)): [state: S, setState: Dispatch<SetStateAction<S>>] {
-	const currentlyRenderingComponent = resolveCurrentComponent();
-	const hook = createWorkInProgressHook(() => (typeIs(initialState, "function") ? initialState() : initialState));
-	const dispatch = (action: SetStateAction<S>) => {
-		// If you update a State Hook to the same value as the current state,
-		// this will bail out without rendering the children or firing effects.
-		const nextState = setStateReducer(hook.state, action);
-		if (hook.state !== nextState) {
-			currentlyRenderingComponent.setHookState(hook.id, () => (hook.state = nextState));
-		}
-	};
-	return [hook.state, dispatch];
+	const [state, dispatch] = useReducer(
+		(state: S, action: SetStateAction<S>): S => {
+			return typeIs(action, "function") ? action(state) : action;
+		},
+		undefined,
+		() => (typeIs(initialState, "function") ? initialState() : initialState),
+	);
+	return [state, dispatch];
 }
