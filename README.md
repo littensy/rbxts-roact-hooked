@@ -14,7 +14,7 @@ interface MyComponentProps {
   name?: string;
 }
 
-export const MyComponent = hooked<MyComponentProps>(({ name = "David Baszucki" }) => {
+export const MyComponent = hooked<MyComponentProps>(({ name: "David Baszucki" }) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
