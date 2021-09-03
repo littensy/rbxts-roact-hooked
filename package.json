@@ -1,6 +1,6 @@
 {
   "name": "@rbxts/roact-hooked",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Roact hooks based on Kampfkarren's hooks & React Hooks",
   "main": "out/init.lua",
   "scripts": {
@@ -19,7 +19,9 @@
     "hooks"
   ],
   "author": "littensy",
-  "contributors": ["Spectrius"],
+  "contributors": [
+    "Spectrius"
+  ],
   "license": "MIT",
   "types": "out/index.d.ts",
   "repository": {
