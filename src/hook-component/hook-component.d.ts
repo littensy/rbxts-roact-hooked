@@ -1,31 +1,28 @@
-import type { Effect, FC, FunctionComponentConstructor, LinkedList } from "../index";
+import type { Effect, FC, HookedComponentConstructor, LinkedList } from "../types";
 import type { Hook, prepareHooks, resetHooks } from "../work-in-progress-hook";
 import type Roact from "@rbxts/roact";
 
-export = FromFunctionComponent;
+export = HookComponent;
 export as namespace FromFunctionComponent;
 
-// Main functions
-declare namespace FromFunctionComponent {
+// Function export
+declare namespace HookComponent {
 	const dependencies: {
 		Roact: typeof Roact;
 		prepareHooks: typeof prepareHooks;
 		resetHooks: typeof resetHooks;
 	};
 
-	function fromFunctionComponent<P = {}>(
-		render: FC<P>,
-		componentType: typeof Roact.Component,
-	): FunctionComponentConstructor<P>;
+	function hookComponent<P = {}>(render: FC<P>, componentType: typeof Roact.Component): HookedComponentConstructor<P>;
 }
 
-// Function Component
-declare namespace FromFunctionComponent {
-	interface FunctionComponentState {
+// Hooked Component
+declare namespace HookComponent {
+	interface HookedComponentState {
 		[id: number]: unknown;
 	}
 
-	interface FunctionComponent<P = {}> extends Roact.Component<P, FunctionComponentState> {
+	interface HookedComponent<P = {}> extends Roact.Component<P, HookedComponentState> {
 		/**
 		 * The first hook in the linked list.
 		 */

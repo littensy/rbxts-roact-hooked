@@ -1,5 +1,5 @@
-import type { FunctionComponent } from "./from-function-component";
-import type { LinkedListNode } from "./index";
+import type { HookedComponent } from "./hook-component";
+import type { LinkedListNode } from "./types";
 
 export interface Hook<S = unknown> extends LinkedListNode<Hook> {
 	id: number;
@@ -15,12 +15,12 @@ let workInProgressHook: Hook | undefined;
 /**
  * Reference to a component mid-render.
  */
-let currentlyRenderingComponent: FunctionComponent | undefined;
+let currentlyRenderingComponent: HookedComponent | undefined;
 
 /**
  * Returns the currently-rendering component. Throws an error if a component is not mid-render.
  */
-export function resolveCurrentComponent(): FunctionComponent {
+export function resolveCurrentComponent(): HookedComponent {
 	return (
 		currentlyRenderingComponent ||
 		error(
@@ -34,7 +34,7 @@ export function resolveCurrentComponent(): FunctionComponent {
 /**
  * Prepares for an upcoming render.
  */
-export function prepareHooks(component: FunctionComponent) {
+export function prepareHooks(component: HookedComponent) {
 	assert(
 		currentlyRenderingComponent === undefined,
 		"Failed to render function component! (Another function component is rendering)",
@@ -45,7 +45,7 @@ export function prepareHooks(component: FunctionComponent) {
 /**
  * Cleans up hooks. Must be called after finishing a render!
  */
-export function resetHooks(component?: FunctionComponent) {
+export function resetHooks(component?: HookedComponent) {
 	if (component) {
 		assert(
 			currentlyRenderingComponent === component,
@@ -60,35 +60,27 @@ export function resetHooks(component?: FunctionComponent) {
  * Get or create a new hook. Hooks are memoized for every component. See the original source
  * {@link https://github.com/facebook/react/blob/main/packages/react-reconciler/src/ReactFiberHooks.new.js#L619 here}.
  *
- * @param create - Returns the initial value for `Hook.state` and `Hook.baseState`.
+ * @param initialValue - Returns the initial value for `Hook.state` and `Hook.baseState`.
  */
-export function createWorkInProgressHook<S>(create: S | (() => S)): Hook<S> {
+export function createWorkInProgressHook<S>(initialValue: S | (() => S)): Hook<S> {
 	const currentlyRenderingComponent = resolveCurrentComponent();
-
-	let nextWorkInProgressHook: undefined | Hook;
-	if (!workInProgressHook) {
-		nextWorkInProgressHook = currentlyRenderingComponent.firstHook;
-	} else {
-		nextWorkInProgressHook = workInProgressHook.next;
-	}
+	const nextWorkInProgressHook = workInProgressHook ? workInProgressHook.next : currentlyRenderingComponent.firstHook;
 
 	if (nextWorkInProgressHook) {
-		// There's already a work-in-progress. Reuse it.
+		// The hook has already been created
 		workInProgressHook = nextWorkInProgressHook;
 	} else {
-		const initialValue = typeIs(create, "function") ? create() : create;
+		// This is a new hook, should be from an initial render
+		const state = typeIs(initialValue, "function") ? initialValue() : initialValue;
+		const id = workInProgressHook ? workInProgressHook.id + 1 : 0;
 
-		const newHook: Hook<S> = {
-			id: workInProgressHook ? workInProgressHook.id + 1 : 0,
-			state: initialValue,
-			baseState: initialValue,
-		};
+		const newHook: Hook<S> = { id, state, baseState: state };
 
-		if (workInProgressHook === undefined) {
-			// This is the first hook in the list.
+		if (!workInProgressHook) {
+			// This is the first hook in the list
 			currentlyRenderingComponent.firstHook = workInProgressHook = newHook;
 		} else {
-			// Append to the end of the list.
+			// Append to the end of the list
 			workInProgressHook = workInProgressHook.next = newHook;
 		}
 	}
