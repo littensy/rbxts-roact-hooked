@@ -5,9 +5,9 @@ import { createWorkInProgressHook } from "../work-in-progress-hook";
  * `useRef` returns a memoized *`Ref`*, a special type of binding that points to Roblox Instance objects that are
  * created by Roact. The returned object will persist for the full lifetime of the component.
  *
- * `useValue()` is handy for keeping any mutable value around similar to how you’d use instance fields in classes.
+ * `useMutable()` is handy for keeping any mutable value around similar to how you’d use instance fields in classes.
  *
- * This is not mutable like React's `useRef` hook. If you want to use a mutable object, refer to {@link useValue}.
+ * This is not mutable like React's `useRef` hook. If you want to use a mutable object, refer to {@link useMutable}.
  *
  * @example
  * const ref = useRef<TextBox>();

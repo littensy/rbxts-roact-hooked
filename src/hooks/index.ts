@@ -5,5 +5,5 @@ export { useEffect } from "./use-effect";
 export { useMemo } from "./use-memo";
 export { useReducer } from "./use-reducer";
 export { useState } from "./use-state";
-export { useValue } from "./use-value";
+export { useMutable } from "./use-mutable";
 export { useRef } from "./use-ref";
