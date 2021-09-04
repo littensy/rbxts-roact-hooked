@@ -1,5 +1,11 @@
 # Latest
 
+# 1.2.1
+
+## Development
+
+ - Roact is a peer dependency 87efc1784fd173bd65a417cd3f5b111a25afb1c9 @littensy
+
 # v1.2.0
 
 **This is a breaking change!**
