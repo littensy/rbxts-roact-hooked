@@ -2,13 +2,13 @@
  * @see https://github.com/Kampfkarren/roact-hooks/blob/main/src/createUseContext.lua
  */
 
-import { createWorkInProgressHook, resolveCurrentComponent } from "../work-in-progress-hook";
+import { memoizedHook, resolveCurrentComponent } from "../utils/memoized-hook";
 import { useEffect } from "./use-effect";
 import { useState } from "./use-state";
 import Roact from "@rbxts/roact";
 import type { Destructor, RoactContext } from "../types";
 
-interface ContextInternal<T> {
+interface ContextWithInternals<T> {
 	Provider: Roact.ComponentConstructor<{
 		value: T;
 	}>;
@@ -50,9 +50,9 @@ function copyComponent<T>(component: Roact.Component) {
  * @see https://reactjs.org/docs/hooks-reference.html#usecontext
  */
 export function useContext<T>(context: RoactContext<T>): T {
-	const thisContext = context as ContextInternal<T>;
+	const thisContext = context as ContextWithInternals<T>;
 
-	const { state: contextEntry } = createWorkInProgressHook(() => {
+	const { state: contextEntry } = memoizedHook(() => {
 		const consumer = copyComponent<T>(resolveCurrentComponent());
 		thisContext.Consumer.init(consumer);
 		return consumer.contextEntry;

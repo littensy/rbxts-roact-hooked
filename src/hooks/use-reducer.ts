@@ -7,11 +7,13 @@ import {
 	ReducerStateWithoutAction,
 	ReducerWithoutAction,
 } from "../types";
-import { createWorkInProgressHook, resolveCurrentComponent } from "../work-in-progress-hook";
+import { memoizedHook, resolveCurrentComponent } from "../utils/memoized-hook";
 
 /**
  * Accepts a reducer of type `(state, action) => newState`, and returns the current state paired with a `dispatch`
  * method.
+ *
+ * If a new state is the same value as the current state, this will bail out without rerendering the component.
  *
  * `useReducer` is usually preferable to `useState` when you have complex state logic that involves multiple sub-values.
  * It also lets you optimize performance for components that trigger deep updates because [you can pass `dispatch` down
@@ -38,6 +40,8 @@ export function useReducer<R extends ReducerWithoutAction<any>, I>(
  * Accepts a reducer of type `(state, action) => newState`, and returns the current state paired with a `dispatch`
  * method.
  *
+ * If a new state is the same value as the current state, this will bail out without rerendering the component.
+ *
  * `useReducer` is usually preferable to `useState` when you have complex state logic that involves multiple sub-values.
  * It also lets you optimize performance for components that trigger deep updates because [you can pass `dispatch` down
  * instead of callbacks](https://reactjs.org/docs/hooks-faq.html#how-to-avoid-passing-callbacks-down).
@@ -63,6 +67,8 @@ export function useReducer<R extends ReducerWithoutAction<any>>(
  * Accepts a reducer of type `(state, action) => newState`, and returns the current state paired with a `dispatch`
  * method.
  *
+ * If a new state is the same value as the current state, this will bail out without rerendering the component.
+ *
  * `useReducer` is usually preferable to `useState` when you have complex state logic that involves multiple sub-values.
  * It also lets you optimize performance for components that trigger deep updates because [you can pass `dispatch` down
  * instead of callbacks](https://reactjs.org/docs/hooks-faq.html#how-to-avoid-passing-callbacks-down).
@@ -87,6 +93,8 @@ export function useReducer<R extends Reducer<any, any>, I>(
 /**
  * Accepts a reducer of type `(state, action) => newState`, and returns the current state paired with a `dispatch`
  * method.
+ *
+ * If a new state is the same value as the current state, this will bail out without rerendering the component.
  *
  * `useReducer` is usually preferable to `useState` when you have complex state logic that involves multiple sub-values.
  * It also lets you optimize performance for components that trigger deep updates because [you can pass `dispatch` down
@@ -114,6 +122,8 @@ export function useReducer<R extends Reducer<any, any>, I>(
  * Accepts a reducer of type `(state, action) => newState`, and returns the current state paired with a `dispatch`
  * method.
  *
+ * If a new state is the same value as the current state, this will bail out without rerendering the component.
+ *
  * `useReducer` is usually preferable to `useState` when you have complex state logic that involves multiple sub-values.
  * It also lets you optimize performance for components that trigger deep updates because [you can pass `dispatch` down
  * instead of callbacks](https://reactjs.org/docs/hooks-faq.html#how-to-avoid-passing-callbacks-down).
@@ -134,18 +144,16 @@ export function useReducer<R extends Reducer<unknown, unknown>, I>(
 	reducer: R,
 	initializerArg: I,
 	initializer?: (arg: I) => ReducerState<R>,
-): [ReducerState<R>, Dispatch<ReducerAction<R>>] {
-	const currentlyRenderingComponent = resolveCurrentComponent();
-	const hook = createWorkInProgressHook(() =>
-		initializer ? initializer(initializerArg) : (initializerArg as ReducerState<R>),
-	);
-	const dispatch = (action: ReducerAction<R>) => {
-		// If you update a State Hook to the same value as the current state,
-		// this will bail out without rendering the children or firing effects.
+): [state: ReducerState<R>, dipatch: Dispatch<ReducerAction<R>>] {
+	const currentComponent = resolveCurrentComponent();
+	const hook = memoizedHook(() => (initializer ? initializer(initializerArg) : (initializerArg as ReducerState<R>)));
+
+	function dispatch(action: ReducerAction<R>) {
 		const nextState = reducer(hook.state, action) as ReducerState<R>;
 		if (hook.state !== nextState) {
-			currentlyRenderingComponent.setHookState(hook.id, () => (hook.state = nextState));
+			currentComponent.setHookState(hook.id, () => (hook.state = nextState));
 		}
-	};
+	}
+
 	return [hook.state, dispatch];
 }

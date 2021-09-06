@@ -1,5 +1,5 @@
 import { Binding, createBinding } from "@rbxts/roact";
-import { createWorkInProgressHook } from "../work-in-progress-hook";
+import { memoizedHook } from "../utils/memoized-hook";
 
 /**
  * `useBinding` returns a memoized *`Binding`*, a special object that Roact automatically unwraps into values. When a
@@ -17,7 +17,7 @@ import { createWorkInProgressHook } from "../work-in-progress-hook";
  * @see https://roblox.github.io/roact/advanced/bindings-and-refs/#bindings
  */
 export function useBinding<T>(initialValue: T): [Binding<T>, (newValue: T) => void] {
-	return createWorkInProgressHook(() => {
+	return memoizedHook(() => {
 		const bindingSet: [Binding<T>, (newValue: T) => void] = createBinding(initialValue);
 		return bindingSet;
 	}).state;

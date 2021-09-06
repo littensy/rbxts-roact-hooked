@@ -1,4 +1,4 @@
-import { createWorkInProgressHook } from "../work-in-progress-hook";
+import { memoizedHook } from "../utils/memoized-hook";
 
 /**
  * `useMutable` returns a mutable object whose `.current` property is initialized to the argument `initialValue`.
@@ -21,6 +21,5 @@ import { createWorkInProgressHook } from "../work-in-progress-hook";
  * @see https://reactjs.org/docs/hooks-reference.html#useref
  */
 export function useMutable<T>(initialValue: T): { current: T } {
-	const hook = createWorkInProgressHook(() => ({ current: initialValue }));
-	return hook.state;
+	return memoizedHook(() => ({ current: initialValue })).state;
 }

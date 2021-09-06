@@ -1,5 +1,5 @@
-import { areDepsEqual } from "../are-deps-equal";
-import { createWorkInProgressHook } from "../work-in-progress-hook";
+import { areDepsEqual } from "../utils/are-deps-equal";
+import { memoizedHook } from "../utils/memoized-hook";
 import type { DependencyList } from "../types";
 
 /**
@@ -22,7 +22,7 @@ import type { DependencyList } from "../types";
  * @see https://reactjs.org/docs/hooks-reference.html#usememo
  */
 export function useMemo<T extends defined>(factory: () => T, deps: DependencyList | undefined): T {
-	const hook = createWorkInProgressHook<[T?, DependencyList?]>(() => []);
+	const hook = memoizedHook<[T?, DependencyList?]>(() => []);
 
 	const [prevValue, prevDeps] = hook.state;
 	if (prevValue !== undefined && deps && areDepsEqual(deps, prevDeps)) {

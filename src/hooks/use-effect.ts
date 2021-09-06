@@ -1,5 +1,5 @@
-import { areDepsEqual } from "../are-deps-equal";
-import { createWorkInProgressHook, resolveCurrentComponent } from "../work-in-progress-hook";
+import { areDepsEqual } from "../utils/are-deps-equal";
+import { memoizedHook, resolveCurrentComponent } from "../utils/memoized-hook";
 import type { DependencyList, Effect, EffectCallback } from "../types";
 
 function scheduleEffect(effect: Effect): Effect {
@@ -49,7 +49,7 @@ function scheduleEffect(effect: Effect): Effect {
  * @see https://reactjs.org/docs/hooks-reference.html#useeffect
  */
 export function useEffect(callback: EffectCallback, deps?: DependencyList) {
-	const hook = createWorkInProgressHook<Effect | undefined>(undefined);
+	const hook = memoizedHook<Effect | undefined>(undefined);
 	const prevDeps = hook.state?.deps;
 	if (deps && areDepsEqual(deps, prevDeps)) return;
 	hook.state = scheduleEffect({ id: hook.id, callback, deps });

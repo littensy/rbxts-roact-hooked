@@ -1,5 +1,5 @@
 import { Ref, createRef } from "@rbxts/roact";
-import { createWorkInProgressHook } from "../work-in-progress-hook";
+import { memoizedHook } from "../utils/memoized-hook";
 
 /**
  * `useRef` returns a memoized *`Ref`*, a special type of binding that points to Roblox Instance objects that are
@@ -26,5 +26,5 @@ import { createWorkInProgressHook } from "../work-in-progress-hook";
  * @see https://roblox.github.io/roact/advanced/bindings-and-refs/#refs
  */
 export function useRef<T extends Instance = Instance>(): Ref<T> {
-	return createWorkInProgressHook(() => createRef<T>()).state;
+	return memoizedHook(() => createRef<T>()).state;
 }
