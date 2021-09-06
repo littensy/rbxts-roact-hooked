@@ -1,4 +1,4 @@
-import type { DependencyList } from "./types";
+import type { DependencyList } from "../types";
 
 export function areDepsEqual(nextDeps: DependencyList, prevDeps?: DependencyList) {
 	if (!prevDeps) return false;
