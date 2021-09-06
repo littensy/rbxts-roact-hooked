@@ -1,4 +1,10 @@
-# Latest
+# Next
+
+## Development
+
+ - Rewrite hook-component in TypeScript 224b5b51f913a2e2dcd7f11360cbf7bb9a84a401 22abb382073ec0b2491b53b0ec3345e2d86cd53f @littensy
+ - Remove type declaration file 6203da3b34390e1391d06ada6ce519442bce1e77 @littensy
+ - Add utils folder 224cc353efc8ddaaae869cfe78a1f87a47609f00 @littensy
 
 # 1.2.1
 
