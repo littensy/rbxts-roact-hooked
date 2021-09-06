@@ -12,8 +12,8 @@ type SetStateAction<S> = S | ((prevState: S) => S);
  * The `setState` function is used to update the state. It always knows the current state, so it's safe to omit from
  * the `useEffect` or `useCallback` dependency lists.
  *
- * If you update a State Hook to the same value as the current state, this will bail out without rendering the children
- * or firing effects.
+ * If you update a State Hook to the same value as the current state, this will bail out without rerendering the
+ * component.
  *
  * @example
  * const [state, setState] = useState(initialState);
@@ -36,8 +36,8 @@ export function useState<S>(initialState: S | (() => S)): [state: S, setState: D
  * The `setState` function is used to update the state. It always knows the current state, so it's safe to omit from
  * the `useEffect` or `useCallback` dependency lists.
  *
- * If you update a State Hook to the same value as the current state, this will bail out without rendering the children
- * or firing effects.
+ * If you update a State Hook to the same value as the current state, this will bail out without rerendering the
+ * component.
  *
  * @example
  * const [state, setState] = useState(initialState);
@@ -62,8 +62,8 @@ export function useState<S = undefined>(
  * The `setState` function is used to update the state. It always knows the current state, so it's safe to omit from
  * the `useEffect` or `useCallback` dependency lists.
  *
- * If you update a State Hook to the same value as the current state, this will bail out without rendering the children
- * or firing effects.
+ * If you update a State Hook to the same value as the current state, this will bail out without rerendering the
+ * component.
  *
  * @example
  * const [state, setState] = useState(initialState);
