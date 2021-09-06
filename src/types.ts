@@ -1,23 +1,6 @@
 import type Roact from "@rbxts/roact";
 
 export = Hooked;
-export as namespace Hooked;
-
-// Function Component
-declare namespace Hooked {
-	/**
-	 * A Function Component
-	 */
-	type FC<P = {}> = Roact.FunctionComponent<P>;
-
-	/**
-	 * Wraps a Function Component to make it stateful.
-	 */
-	interface HookedComponentConstructor<P = {}> extends Roact.ComponentConstructor<P, Record<number, unknown>> {
-		defaultProps?: Partial<P>;
-		validateProps?: (props: P) => LuaTuple<[boolean, string?]>;
-	}
-}
 
 // Roact
 declare namespace Hooked {
