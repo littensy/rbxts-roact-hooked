@@ -1,6 +1,12 @@
 # Next
 
+# 1.2.2
+
 ## Development
+
+📚 New `useMutable` function overloads
+ - Add `useMutable` function overloads 4fd7229231260cc647c6e7387db849bb3dbd3b88 @littensy
+
 
  - Rewrite hook-component in TypeScript 224b5b51f913a2e2dcd7f11360cbf7bb9a84a401 22abb382073ec0b2491b53b0ec3345e2d86cd53f @littensy
  - Remove type declaration file 6203da3b34390e1391d06ada6ce519442bce1e77 @littensy
