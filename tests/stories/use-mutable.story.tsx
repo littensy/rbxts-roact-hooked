@@ -1,9 +1,12 @@
-import { hooked, useEffect, useMutable, useState } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
+import {hooked, useEffect, useMutable, useState} from "@rbxts/roact-hooked";
 
 const WorldsWorstStopwatch = hooked(() => {
 	const [updater, setUpdater] = useState(0);
 	const stopwatch = useMutable(0);
+
+	const startUndefined = useMutable<number>();
+	startUndefined.current = stopwatch.current;
 
 	useEffect(() => {
 		const connection = game.GetService("RunService").Heartbeat.Connect((step) => (stopwatch.current += step));
