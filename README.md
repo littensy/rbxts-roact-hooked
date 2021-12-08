@@ -10,11 +10,12 @@ Roact hooks based on [Kampfkarren's hooks](https://github.com/Kampfkarren/roact-
 import { hooked, useEffect, useState } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
 
-interface MyComponentProps {
+interface Props {
   name?: string;
 }
 
-export const MyComponent = hooked<MyComponentProps>(({ name = "David Baszucki" }) => {
+function MyComponent(props: Props) {
+  const { name = "David Baszucki" } = props;
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -30,5 +31,7 @@ export const MyComponent = hooked<MyComponentProps>(({ name = "David Baszucki" }
       }}
     />
   );
-});
+}
+
+export default hooked(MyComponent);
 ```
