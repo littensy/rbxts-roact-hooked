@@ -1,5 +1,11 @@
 # Next
 
+# 1.2.3
+
+## Bug Fixes
+
+ - Fix `areDepsEqual` returning true when nextDeps is empty
+
 # 1.2.2
 
 ## Development
