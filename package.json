@@ -1,6 +1,6 @@
 {
   "name": "@rbxts/roact-hooked",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Roact hooks based on Kampfkarren's hooks & React Hooks",
   "main": "out/init.lua",
   "scripts": {
