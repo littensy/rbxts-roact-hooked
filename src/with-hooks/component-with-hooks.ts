@@ -95,6 +95,8 @@ export abstract class ComponentWithHooks<P = any> {
 		const handle = effect.callback();
 		if (handle) {
 			this.effectHandles.set(effect.id, handle);
+		} else {
+			this.effectHandles.delete(effect.id);
 		}
 		this.flushEffectsHelper(effect.next);
 	}
