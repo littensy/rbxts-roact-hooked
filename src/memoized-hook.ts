@@ -66,11 +66,12 @@ export function memoizedHook<S>(initialValue: S | (() => S)): Hook<S> {
 		// This is a new hook, should be from an initial render
 		const state = resolve(initialValue);
 
-		const newHook: Hook<S> = {
-			id: currentHook ? currentHook.id + 1 : 0,
-			state,
-			baseState: state,
-		};
+		let id = 0;
+		if (currentHook) {
+			id = currentHook.id + 1;
+		}
+
+		const newHook: Hook<S> = { id, state, baseState: state };
 
 		if (!currentHook) {
 			// This is the first hook in the list
