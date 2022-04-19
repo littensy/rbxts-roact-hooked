@@ -7,7 +7,7 @@ import {
 	ReducerStateWithoutAction,
 	ReducerWithoutAction,
 } from "../types";
-import { memoizedHook, resolveCurrentComponent } from "../utils/memoized-hook";
+import { memoizedHook, resolveCurrentComponent } from "../memoized-hook";
 
 /**
  * Accepts a reducer of type `(state, action) => newState`, and returns the current state paired with a `dispatch`
@@ -146,7 +146,13 @@ export function useReducer<R extends Reducer<unknown, unknown>, I>(
 	initializer?: (arg: I) => ReducerState<R>,
 ): [state: ReducerState<R>, dipatch: Dispatch<ReducerAction<R>>] {
 	const currentComponent = resolveCurrentComponent();
-	const hook = memoizedHook(() => (initializer ? initializer(initializerArg) : (initializerArg as ReducerState<R>)));
+	const hook = memoizedHook(() => {
+		if (initializer) {
+			return initializer(initializerArg);
+		} else {
+			return initializerArg as ReducerState<R>;
+		}
+	});
 
 	function dispatch(action: ReducerAction<R>) {
 		const nextState = reducer(hook.state, action) as ReducerState<R>;

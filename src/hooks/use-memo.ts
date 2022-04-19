@@ -1,5 +1,5 @@
 import { areDepsEqual } from "../utils/are-deps-equal";
-import { memoizedHook } from "../utils/memoized-hook";
+import { memoizedHook } from "../memoized-hook";
 import type { DependencyList } from "../types";
 
 /**

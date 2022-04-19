@@ -1,5 +1,5 @@
 import { areDepsEqual } from "../utils/are-deps-equal";
-import { memoizedHook, resolveCurrentComponent } from "../utils/memoized-hook";
+import { memoizedHook, resolveCurrentComponent } from "../memoized-hook";
 import type { DependencyList, Effect, EffectCallback } from "../types";
 
 function scheduleEffect(effect: Effect): Effect {

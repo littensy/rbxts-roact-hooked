@@ -1,5 +1,5 @@
 import { Binding, createBinding } from "@rbxts/roact";
-import { memoizedHook } from "../utils/memoized-hook";
+import { memoizedHook } from "../memoized-hook";
 
 /**
  * `useBinding` returns a memoized *`Binding`*, a special object that Roact automatically unwraps into values. When a

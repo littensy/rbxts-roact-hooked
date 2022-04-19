@@ -1,5 +1,5 @@
 import { Ref, createRef } from "@rbxts/roact";
-import { memoizedHook } from "../utils/memoized-hook";
+import { memoizedHook } from "../memoized-hook";
 
 /**
  * `useRef` returns a memoized *`Ref`*, a special type of binding that points to Roblox Instance objects that are

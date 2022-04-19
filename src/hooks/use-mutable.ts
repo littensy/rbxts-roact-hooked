@@ -1,4 +1,4 @@
-import { memoizedHook } from "../utils/memoized-hook";
+import { memoizedHook } from "../memoized-hook";
 
 interface MutableObject<T> {
 	current: T;

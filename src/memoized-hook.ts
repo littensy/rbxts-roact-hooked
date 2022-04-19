@@ -1,14 +1,13 @@
-import { LinkedListNode } from "../types";
-import type { ComponentWithHooks } from "../with-hooks";
+import { LinkedListNode } from "./types";
+import { resolve } from "./utils/resolve";
+import type { ComponentWithHooks } from "./with-hooks";
 
 const EXCEPTION_INVALID_HOOK_CALL = [
 	"Invalid hook call. Hooks can only be called inside of the body of a function component.",
 	"This is usually the result of conflicting versions of roact-hooked.",
 	"See https://reactjs.org/link/invalid-hook-call for tips about how to debug and fix this problem.",
 ].join("\n");
-
 const EXCEPTION_RENDER_NOT_DONE = "Failed to render hook! (Another hooked component is rendering)";
-
 const EXCEPTION_RENDER_OVERLAP = "Failed to render hook! (Another hooked component rendered during this one)";
 
 export interface Hook<S = unknown> extends LinkedListNode<Hook> {
@@ -18,7 +17,6 @@ export interface Hook<S = unknown> extends LinkedListNode<Hook> {
 }
 
 let currentHook: Hook | undefined;
-
 let currentlyRenderingComponent: ComponentWithHooks | undefined;
 
 /**
@@ -53,14 +51,20 @@ export function resolveCurrentComponent(): ComponentWithHooks {
  */
 export function memoizedHook<S>(initialValue: S | (() => S)): Hook<S> {
 	const currentlyRenderingComponent = resolveCurrentComponent();
-	const nextHook = currentHook ? currentHook.next : currentlyRenderingComponent.firstHook;
+
+	let nextHook: Hook | undefined;
+	if (currentHook) {
+		nextHook = currentHook.next;
+	} else {
+		nextHook = currentlyRenderingComponent.firstHook;
+	}
 
 	if (nextHook) {
 		// The hook has already been created
 		currentHook = nextHook;
 	} else {
 		// This is a new hook, should be from an initial render
-		const state = typeIs(initialValue, "function") ? initialValue() : initialValue;
+		const state = resolve(initialValue);
 
 		const newHook: Hook<S> = {
 			id: currentHook ? currentHook.id + 1 : 0,

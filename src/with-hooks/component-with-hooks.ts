@@ -1,4 +1,4 @@
-import { Hook, renderDone, renderReady } from "../utils/memoized-hook";
+import { Hook, renderDone, renderReady } from "../memoized-hook";
 import type { Destructor, Effect, LinkedList } from "../types";
 import type Roact from "@rbxts/roact";
 

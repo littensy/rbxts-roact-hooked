@@ -1,3 +1,4 @@
+import { resolve } from "utils/resolve";
 import { useReducer } from "./use-reducer";
 import type { Dispatch } from "../types";
 
@@ -79,10 +80,10 @@ export function useState<S = undefined>(
 export function useState<S>(initialState: S | (() => S)): [state: S, setState: Dispatch<SetStateAction<S>>] {
 	const [state, dispatch] = useReducer(
 		(state: S, action: SetStateAction<S>): S => {
-			return typeIs(action, "function") ? action(state) : action;
+			return resolve(action, state);
 		},
 		undefined,
-		() => (typeIs(initialState, "function") ? initialState() : initialState),
+		() => resolve(initialState),
 	);
 	return [state, dispatch];
 }

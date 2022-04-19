@@ -2,7 +2,7 @@
  * @see https://github.com/Kampfkarren/roact-hooks/blob/main/src/createUseContext.lua
  */
 
-import { memoizedHook, resolveCurrentComponent } from "../utils/memoized-hook";
+import { memoizedHook, resolveCurrentComponent } from "../memoized-hook";
 import { useEffect } from "./use-effect";
 import { useState } from "./use-state";
 import Roact from "@rbxts/roact";
