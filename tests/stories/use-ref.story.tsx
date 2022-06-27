@@ -1,7 +1,7 @@
-import { hooked, useEffect, useRef } from "@rbxts/roact-hooked";
+import { useEffect, useRef, withHooks } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
 
-const Clipboard = hooked(() => {
+const Clipboard = withHooks(() => {
 	const ref = useRef<TextBox>();
 
 	useEffect(() => {

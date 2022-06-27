@@ -1,4 +1,4 @@
-import { hooked, useReducer } from "@rbxts/roact-hooked";
+import { useReducer, withHooks } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
 
 interface State {
@@ -20,7 +20,7 @@ function reducer({ count }: State, { type: actionType }: Action) {
 	}
 }
 
-const Counter = hooked(() => {
+const Counter = withHooks(() => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	return (

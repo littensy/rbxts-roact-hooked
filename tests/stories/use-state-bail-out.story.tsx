@@ -1,21 +1,24 @@
-import { hooked, useEffect, useState } from "@rbxts/roact-hooked";
+import { useEffect, useState, withHooks } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
 
-const Counter = hooked(() => {
+const Counter = withHooks(() => {
 	const [state, setState] = useState(1);
 
-	print("This number should not repeat: " + state);
+	print("Re-rendered: " + state);
 
 	useEffect(() => {
-		print("Starting setstate spam");
-		setState(state);
-		setState(state);
-		setState(state);
+		print("The following should not trigger a re-render");
+		for (let i = 0; i < 10; i++) {
+			setState(state);
+		}
+
 		const promise = Promise.delay(0.25).then(() => {
-			setState(2);
-			setState(2);
-			setState(2);
+			print("The following should only trigger one re-render");
+			for (let i = 0; i < 10; i++) {
+				setState(5);
+			}
 		});
+
 		return () => promise.cancel();
 	}, []);
 

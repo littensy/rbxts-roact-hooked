@@ -1,22 +1,22 @@
-import { hooked, useEffect, useState } from "@rbxts/roact-hooked";
+import { useEffect, useState, withHooks } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
 
-const PrintingButton = hooked(() => {
+const PrintingButton = withHooks(() => {
 	const [counter, setCounter] = useState(0);
 	const [lonerCounter, setLonerCounter] = useState(0);
 
 	useEffect(() => {
-		print("current counter is", counter);
-		return () => print("goodbyeeee");
+		print("didUpdate, counter:", counter);
+		return () => print("willUpdate / willUnmount");
 	});
 
 	useEffect(() => {
-		print("loner counter is", lonerCounter);
-		return () => print("goodbyeeee as a loner");
+		print("didUpdate [lonerCounter], lonerCounter:", lonerCounter);
+		return () => print("willUpdate / willUnmount [lonerCounter]");
 	}, [lonerCounter]);
 
 	useEffect(() => {
-		print("i only run once");
+		print("didMount");
 	}, []);
 
 	return (

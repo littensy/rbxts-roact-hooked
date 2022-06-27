@@ -1,7 +1,7 @@
-import { hooked, useMemo, useState } from "@rbxts/roact-hooked";
+import { useMemo, useState, withHooks } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
 
-const WorldsWorstClock = hooked(() => {
+const WorldsWorstClock = withHooks(() => {
 	const [unrelated, setUnrelated] = useState(0);
 	const [updater, setUpdater] = useState(0);
 

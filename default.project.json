@@ -6,6 +6,6 @@
 		"**/tsconfig.json"
 	],
 	"tree": {
-		"$path": "out"
+		"$path": "src"
 	}
 }

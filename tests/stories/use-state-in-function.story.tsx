@@ -1,11 +1,11 @@
-import { hooked, useState } from "@rbxts/roact-hooked";
+import { useState, withHooks } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
 
 function useStateButCooler(initialValue: number) {
 	return useState(initialValue);
 }
 
-const Counter = hooked(() => {
+const Counter = withHooks(() => {
 	const [counter1, setCounter1] = useStateButCooler(5);
 	const [counter2, setCounter2] = useStateButCooler(10);
 
