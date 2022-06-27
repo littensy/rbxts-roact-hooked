@@ -2,20 +2,23 @@
 
 Roact hooks based on [Kampfkarren's hooks](https://github.com/Kampfkarren/roact-hooks) & [React Hooks](https://reactjs.org/docs/hooks-intro.html)
 
-> ✋🏾 This is a work in progress!
+## Install
+
+```
+npm install @rbxts/roact-hooked
+```
 
 ## Usage
 
 ```tsx
-import { hooked, useEffect, useState } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
+import { withHooks, useEffect, useState } from "@rbxts/roact-hooked";
 
 interface Props {
   name?: string;
 }
 
-function MyComponent(props: Props) {
-  const { name = "David Baszucki" } = props;
+function MyComponent({ name = "David Baszucki" }: Props) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -33,5 +36,5 @@ function MyComponent(props: Props) {
   );
 }
 
-export default hooked(MyComponent);
+export default withHooks(MyComponent);
 ```
