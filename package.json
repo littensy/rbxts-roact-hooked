@@ -4,7 +4,6 @@
   "description": "Roact hooks based on Kampfkarren's hooks & React Hooks",
   "main": "src/init.lua",
   "scripts": {
-    "prepublishOnly": "npm run build",
     "watch": "rbxtsc -w --type=model -p ./tests -i ./include",
     "serve": "rojo serve ./tests/default.project.json"
   },
