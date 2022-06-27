@@ -18,15 +18,15 @@ local function withHooksImpl(Component, Superclass)
 	end
 
 	function Proxy:didMount()
-		commitHookEffectListUpdate(self, true)
+		commitHookEffectListUpdate(self)
 	end
 
 	function Proxy:didUpdate()
-		commitHookEffectListUpdate(self, true)
+		commitHookEffectListUpdate(self)
 	end
 
 	function Proxy:willUnmount()
-		commitHookEffectListUnmount(self, false)
+		commitHookEffectListUnmount(self)
 	end
 
 	return Proxy
