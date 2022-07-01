@@ -43,17 +43,27 @@ local function areHookInputsEqual(nextDeps, prevDeps)
 		return false
 	end
 
-	if #nextDeps ~= #prevDeps then
+	if type(nextDeps) ~= type(prevDeps) then
 		return false
 	end
 
-	for i, v in pairs(nextDeps) do
-		if prevDeps[i] ~= v then
-			return false
+	if type(nextDeps) == "table" then
+		for key, value in pairs(nextDeps) do
+			if prevDeps[key] ~= value then
+				return false
+			end
 		end
+
+		for key, value in pairs(prevDeps) do
+			if nextDeps[key] ~= value then
+				return false
+			end
+		end
+
+		return true
 	end
 
-	return true
+	return nextDeps == prevDeps
 end
 
 local function createHook()
