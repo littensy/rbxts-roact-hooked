@@ -47,7 +47,7 @@ local function areHookInputsEqual(nextDeps, prevDeps)
 		return false
 	end
 
-	for i, v in ipairs(nextDeps) do
+	for i, v in pairs(nextDeps) do
 		if prevDeps[i] ~= v then
 			return false
 		end
