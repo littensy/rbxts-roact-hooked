@@ -9,13 +9,16 @@ import type Roact from "@rbxts/roact";
  *
  * @example
  * function MyComponent(props: Props) {
- * 	return <frame />
+ * 	return <frame />;
  * }
  * export default withHooks(MyComponent);
  *
  * @see https://reactjs.org/docs/hooks-intro.html
  */
-export declare function withHooks<P = {}>(Component: FunctionComponent<P>): (props: P) => Roact.Element;
+export declare function withHooks<P = {}>(
+	Component: FunctionComponent<P>,
+	api?: Partial<ComponentApi<P>>,
+): (props: P) => Roact.Element;
 
 /**
  * `withHooksPure` is a [higher-order component](https://reactjs.org/docs/higher-order-components.html) that wraps a
@@ -27,14 +30,17 @@ export declare function withHooks<P = {}>(Component: FunctionComponent<P>): (pro
  *
  * @example
  * function MyComponent(props: Props) {
- * 	return <frame />
+ * 	return <frame />;
  * }
  * export default withHooksPure(MyComponent);
  *
  * @see https://reactjs.org/docs/react-api.html
  * @see https://roblox.github.io/roact/performance/reduce-reconciliation/
  */
-export declare function withHooksPure<P = {}>(Component: FunctionComponent<P>): (props: P) => Roact.Element;
+export declare function withHooksPure<P = {}>(
+	Component: FunctionComponent<P>,
+	api?: Partial<ComponentApi<P>>,
+): (props: P) => Roact.Element;
 
 // Hooks
 
@@ -405,6 +411,18 @@ export declare function useState<S = undefined>(
 
 // Types
 
+/**
+ * API for extending the functionality of Roact Hooks.
+ */
+interface ComponentApi<P = {}> {
+	defaultProps?: Partial<P>;
+	shouldUpdate: (this: ComponentWithProps<P>, nextProps: P) => boolean;
+	validateProps: (props: P) => true | LuaTuple<[false, string] | [true]>;
+}
+/**
+ * A Roact Component with a public 'props' field.
+ */
+export type ComponentWithProps<P = {}, S = {}> = Roact.Component<P, S> & { props: Roact.PropsWithChildren<P> };
 /**
  * A Roact function component.
  */

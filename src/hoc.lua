@@ -5,10 +5,10 @@ local finishHooks = hooks.finishHooks
 local commitHookEffectListUpdate = hooks.commitHookEffectListUpdate
 local commitHookEffectListUnmount = hooks.commitHookEffectListUnmount
 
-local function withHooksImpl(Component, Superclass)
+local function withHooksImpl(Component, Class, api)
 	local componentName = debug.info(Component, "n") or "Component"
 
-	local Proxy = Superclass:extend("withHooks(" .. componentName .. ")")
+	local Proxy = Class:extend("withHooks(" .. componentName .. ")")
 
 	function Proxy:render()
 		prepareToUseHooks(self)
@@ -29,15 +29,21 @@ local function withHooksImpl(Component, Superclass)
 		commitHookEffectListUnmount(self)
 	end
 
+	if api and type(api) == "table" then
+		for k, v in pairs(api) do
+			Proxy[k] = v
+		end
+	end
+
 	return Proxy
 end
 
-local function withHooks(Component)
-	return withHooksImpl(Component, Roact.Component)
+local function withHooks(Component, api)
+	return withHooksImpl(Component, Roact.Component, api)
 end
 
-local function withHooksPure(Component)
-	return withHooksImpl(Component, Roact.PureComponent)
+local function withHooksPure(Component, api)
+	return withHooksImpl(Component, Roact.PureComponent, api)
 end
 
 return {
