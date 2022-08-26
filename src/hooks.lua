@@ -16,22 +16,23 @@ local function finishHooks()
 end
 
 local function prepareToUseHooks(componentIdentity)
-	currentlyRenderingComponent = componentIdentity
-
 	if workInProgressHook ~= nil then
-		warn("A component failed to fully unmount before rendering a new one.")
+		local prev = currentlyRenderingComponent._name
+		local current = componentIdentity._name
+		warn("The component '" .. prev .. "' did not finish rendering before '" .. current .. "'. Did the former yield or fail to run?")
 		finishHooks()
 	end
+
+	currentlyRenderingComponent = componentIdentity
 end
 
 local function resolveCurrentlyRenderingComponent()
 	if not currentlyRenderingComponent then
 		error(
 			'Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n' ..
-			'1. You might have mismatching versions of React and the renderer (such as React DOM)\n' ..
+			'1. You might be using hooks outside of the withHooks() HOC\n' ..
 			'2. You might be breaking the Rules of Hooks\n' ..
-			'3. You might have more than one copy of React in the same app\n' ..
-			'See https://reactjs.org/link/invalid-hook-call for tips about how to debug and fix this problem.'
+			'3. A hooked component may have yielded or thrown an error\n'
 		)
 	end
 

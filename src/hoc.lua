@@ -8,7 +8,9 @@ local commitHookEffectListUnmount = hooks.commitHookEffectListUnmount
 local function withHooksImpl(Component, Class, api)
 	local componentName = debug.info(Component, "n") or "Component"
 
-	local Proxy = Class:extend("withHooks(" .. componentName .. ")")
+	local Proxy = Class:extend(componentName .. " (roact-hooked)")
+
+	Proxy._name = componentName
 
 	function Proxy:render()
 		prepareToUseHooks(self)
