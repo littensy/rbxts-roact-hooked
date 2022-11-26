@@ -1,5 +1,5 @@
-import { useState, withHooks } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
+import { useState, withHooks } from "@rbxts/roact-hooked";
 
 const Counter = withHooks(
 	({ offset = 0 }: { offset?: number }) => {
@@ -10,7 +10,7 @@ const Counter = withHooks(
 		});
 
 		if (counter1 === 5) {
-			task.wait(1);
+			throw "error";
 		}
 
 		return (

@@ -1,5 +1,5 @@
-import { useEffect, useState, withHooks } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
+import { useEffect, useState, withHooks } from "@rbxts/roact-hooked";
 
 const Counter = withHooks(() => {
 	const [state, setState] = useState(1);

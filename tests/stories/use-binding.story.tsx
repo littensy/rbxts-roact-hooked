@@ -1,5 +1,5 @@
-import { useBinding, useEffect, withHooks } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
+import { useBinding, useEffect, withHooks } from "@rbxts/roact-hooked";
 
 const RunService = game.GetService("RunService");
 

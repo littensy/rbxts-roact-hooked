@@ -1,5 +1,5 @@
-import { useReducer, withHooks } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
+import { useReducer, withHooks } from "@rbxts/roact-hooked";
 
 interface State {
 	count: number;

@@ -1,5 +1,5 @@
-import { useEffect, useMutable, useState, withHooks } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
+import { useEffect, useMutable, useState, withHooks } from "@rbxts/roact-hooked";
 
 const WorldsWorstStopwatch = withHooks(() => {
 	const [updater, setUpdater] = useState(0);

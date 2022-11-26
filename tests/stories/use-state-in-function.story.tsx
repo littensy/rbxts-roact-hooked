@@ -1,5 +1,5 @@
-import { useState, withHooks } from "@rbxts/roact-hooked";
 import Roact from "@rbxts/roact";
+import { useState, withHooks } from "@rbxts/roact-hooked";
 
 function useStateButCooler(initialValue: number) {
 	return useState(initialValue);
