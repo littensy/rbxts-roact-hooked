@@ -2,6 +2,7 @@
 -- https://github.com/facebook/react/blob/main/packages/react-reconciler/src/ReactFiberHooks.new.js
 
 local Roact = require(script.Parent.Roact)
+local NoYield = require(script.Parent.NoYield)
 
 local currentlyRenderingComponent
 local hookCount = 0
@@ -131,11 +132,11 @@ local function commitHookEffectListUpdate(componentIdentity)
 		effect.destroy = nil
 
 		if destroy then
-			task.spawn(destroy)
+			NoYield(destroy)
 		end
 
 		-- Update
-		task.spawn(function()
+		NoYield(function()
 			effect.destroy = effect.create()
 		end)
 
@@ -159,7 +160,7 @@ local function commitHookEffectListUnmount(componentIdentity)
 		effect.destroy = nil
 
 		if destroy then
-			task.spawn(destroy)
+			NoYield(destroy)
 		end
 
 		effect = effect.next
@@ -341,7 +342,9 @@ local function useContext(context)
 	local value, setValue = useState(contextEntry and contextEntry.value)
 
 	useEffect(function()
-		return contextEntry.onUpdate:subscribe(setValue)
+		if contextEntry then
+			return contextEntry.onUpdate:subscribe(setValue)
+		end
 	end, {})
 
 	return value
