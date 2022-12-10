@@ -333,19 +333,51 @@ local function useContext(context)
 	local hook = createWorkInProgressHook()
 
 	if not isReRender then
-		local consumer = setmetatable({}, { __index = currentlyRenderingComponent })
-		context.Consumer.init(consumer)
-		hook.memoizedState = consumer.contextEntry
+		-- Using https://github.com/Kampfkarren/roact-hooks/pull/38
+		local memoizedState = {
+			fakeConsumer = setmetatable({}, {
+				__index = currentlyRenderingComponent
+			}),
+			initialValue = nil,
+		}
+
+		local initialValue
+
+		memoizedState.fakeConsumer.props = {
+			render = function(value)
+				initialValue = value
+			end,
+		}
+
+		-- contextEntry is always nil here, so it will pass initialValue to render
+		context.Consumer.render(memoizedState.fakeConsumer)
+
+		memoizedState.initialValue = initialValue
+		hook.memoizedState = memoizedState
 	end
 
-	local contextEntry = hook.memoizedState
-	local value, setValue = useState(contextEntry and contextEntry.value)
+	-- Sets the context entry internally
+	context.Consumer.init(hook.memoizedState.fakeConsumer)
+
+	local contextEntry = hook.memoizedState.fakeConsumer.contextEntry
+	local initialValue = hook.memoizedState.initialValue
+
+	local value, setValue = useState(if contextEntry == nil then initialValue else contextEntry.value)
 
 	useEffect(function()
-		if contextEntry then
-			return contextEntry.onUpdate:subscribe(setValue)
+		if contextEntry == nil then
+			if value ~= initialValue then
+				setValue(initialValue)
+			end
+			return
 		end
-	end, {})
+
+		if value ~= contextEntry.value then
+			setValue(contextEntry.value)
+		end
+
+		return contextEntry.onUpdate:subscribe(setValue)
+	end, { contextEntry })
 
 	return value
 end
