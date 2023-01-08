@@ -4,9 +4,17 @@ local pureComponent = require(script.Parent.pureComponent)
 
 local proxyComponents = {}
 local statelessComponents = {}
+local modulesWithHookDetection = {}
 
 local function withHookDetection(Roact)
+	local moduleId = tostring(Roact)
 	local createElement = Roact.createElement
+
+	if modulesWithHookDetection[moduleId] then
+		return
+	end
+
+	modulesWithHookDetection[moduleId] = true
 
 	function Roact.createElement(component, props, children)
 		if type(component) ~= "function" or statelessComponents[component] then
