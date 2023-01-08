@@ -4,7 +4,7 @@ import type Roact from "@rbxts/roact";
 
 /**
  * Adds additional behavior to `Roact.createElement`, allowing you to use hooks in your components without
- * having to wrap them in `withHooks` or `withHooksPure`.
+ * having to wrap them in `withHooks` or `withHooksPure`. Can be called multiple times safely.
  *
  * @example
  * withHookDetection(Roact);
