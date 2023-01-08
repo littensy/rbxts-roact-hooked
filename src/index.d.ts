@@ -21,7 +21,7 @@ export declare function withHookDetection(library: typeof Roact): void;
  * }
  * markPureComponent(MyComponent);
  */
-export declare function markPureComponent<T extends FunctionComponent>(Component: T): T;
+export declare function markPureComponent<T extends FunctionComponent<any>>(Component: T): T;
 
 /**
  * `withHooks` is a [higher-order component](https://reactjs.org/docs/higher-order-components.html) that wraps a
