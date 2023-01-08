@@ -31,7 +31,7 @@ local function prepareToUseHooks(componentIdentity)
 	if workInProgressHook ~= nil then
 		local prev = currentlyRenderingComponent._name
 		local current = componentIdentity._name
-		warn("The component '" .. prev .. "' did not finish rendering before '" .. current .. "'. Did the former yield or fail to run?")
+		warn("The component '" .. prev .. "' did not finish rendering before '" .. current .. "' started rendering. Did the former yield or fail to run?")
 		finishHooks()
 	end
 
