@@ -5,7 +5,7 @@ local pureComponent = require(script.Parent.pureComponent)
 local proxyComponents = {}
 local statelessComponents = {}
 
-local function wrapCreateElement(Roact)
+local function withHookDetection(Roact)
 	local createElement = Roact.createElement
 
 	function Roact.createElement(component, props, children)
@@ -47,4 +47,4 @@ local function wrapCreateElement(Roact)
 	end
 end
 
-return wrapCreateElement
+return withHookDetection

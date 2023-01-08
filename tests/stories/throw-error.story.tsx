@@ -1,5 +1,5 @@
 import Roact from "@rbxts/roact";
-import { useState } from "@rbxts/roact-hooked";
+import { useState, withHookDetection } from "@rbxts/roact-hooked";
 
 function Counter({ offset = 0 }: { offset?: number }) {
 	const [counter1, setCounter1] = useState(1);
@@ -57,6 +57,8 @@ function Counter({ offset = 0 }: { offset?: number }) {
 }
 
 export = (target: Frame) => {
+	withHookDetection(Roact);
+
 	const handle = Roact.mount(
 		<>
 			<Counter />

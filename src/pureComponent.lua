@@ -1,6 +1,6 @@
 local pureComponents = {}
 
-local function pureComponent(functionComponent)
+local function markPureComponent(functionComponent)
 	pureComponents[functionComponent] = true
 	return functionComponent
 end
@@ -10,6 +10,6 @@ local function isPureComponent(functionComponent)
 end
 
 return {
-	pureComponent = pureComponent,
+	markPureComponent = markPureComponent,
 	isPureComponent = isPureComponent,
 }

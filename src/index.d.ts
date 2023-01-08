@@ -3,9 +3,33 @@ import type Roact from "@rbxts/roact";
 // HOCs
 
 /**
+ * Adds additional behavior to `Roact.createElement`, allowing you to use hooks in your components without
+ * having to wrap them in `withHooks` or `withHooksPure`.
+ *
+ * @example
+ * withHookDetection(Roact);
+ * Roact.mount(<MyComponent />, playerGui);
+ */
+export declare function withHookDetection(library: typeof Roact): void;
+
+/**
+ * Marks a component as a PureComponent to be used by `wrapCreateElement`.
+ *
+ * @example
+ * export default function MyComponent(props: Props) {
+ * 	return <frame />;
+ * }
+ * markPureComponent(MyComponent);
+ */
+export declare function markPureComponent<T extends FunctionComponent>(Component: T): T;
+
+/**
  * `withHooks` is a [higher-order component](https://reactjs.org/docs/higher-order-components.html) that wraps a
  * Function Component in a [Roact Component](https://roblox.github.io/roact/guide/components/), allowing you to
  * hook into its lifecycle and state.
+ *
+ * The `api` parameter allows you to manually set values for `defaultProps` and `shouldUpdate`, but it is recommended
+ * to use parameter destructuring instead.
  *
  * @example
  * function MyComponent(props: Props) {
@@ -27,6 +51,9 @@ export declare function withHooks<P = {}>(
  *
  * If your function component wrapped in `pure` has a `useState`, `useReducer` or `useContext` hook
  * in its implementation, it will still re-render when the state or context changes.
+ *
+ * The `api` parameter allows you to manually set values for `defaultProps` and `shouldUpdate`, but it is recommended
+ * to use parameter destructuring instead.
  *
  * @example
  * function MyComponent(props: Props) {

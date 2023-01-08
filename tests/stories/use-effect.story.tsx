@@ -1,5 +1,5 @@
 import Roact from "@rbxts/roact";
-import { useEffect, useState } from "@rbxts/roact-hooked";
+import { useEffect, useState, withHookDetection } from "@rbxts/roact-hooked";
 
 function PrintingButton() {
 	const [counter, setCounter] = useState(0);
@@ -57,6 +57,8 @@ function PrintingButton() {
 }
 
 export = (target: Frame) => {
+	withHookDetection(Roact);
+
 	const handle = Roact.mount(<PrintingButton />, target, "Component");
 
 	return () => Roact.unmount(handle);

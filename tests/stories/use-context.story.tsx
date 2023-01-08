@@ -1,5 +1,5 @@
 import Roact from "@rbxts/roact";
-import { useContext, useState } from "@rbxts/roact-hooked";
+import { useContext, useState, withHookDetection } from "@rbxts/roact-hooked";
 
 const CounterContext1 = Roact.createContext<{ counter: number; increment: () => void }>(undefined!);
 const CounterContext2 = Roact.createContext<{ counter: number; increment: () => void }>(undefined!);
@@ -76,6 +76,8 @@ function App() {
 }
 
 export = (target: Frame) => {
+	withHookDetection(Roact);
+
 	const handle = Roact.mount(<App />, target, "Component");
 
 	return () => Roact.unmount(handle);

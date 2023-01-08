@@ -1,5 +1,5 @@
 import Roact from "@rbxts/roact";
-import { useEffect, useRef } from "@rbxts/roact-hooked";
+import { useEffect, useRef, withHookDetection } from "@rbxts/roact-hooked";
 
 function Clipboard() {
 	const ref = useRef<TextBox>();
@@ -16,6 +16,8 @@ function Clipboard() {
 }
 
 export = (target: Frame) => {
+	withHookDetection(Roact);
+
 	const handle = Roact.mount(<Clipboard />, target, "Clipboard");
 
 	return () => Roact.unmount(handle);

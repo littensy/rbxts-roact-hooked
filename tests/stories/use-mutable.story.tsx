@@ -1,5 +1,5 @@
 import Roact from "@rbxts/roact";
-import { useEffect, useMutable, useState } from "@rbxts/roact-hooked";
+import { useEffect, useMutable, useState, withHookDetection } from "@rbxts/roact-hooked";
 
 function WorldsWorstStopwatch() {
 	const [updater, setUpdater] = useState(0);
@@ -44,6 +44,8 @@ function WorldsWorstStopwatch() {
 }
 
 export = (target: Frame) => {
+	withHookDetection(Roact);
+
 	const handle = Roact.mount(<WorldsWorstStopwatch />, target, "WorldsWorstClock");
 
 	return () => Roact.unmount(handle);

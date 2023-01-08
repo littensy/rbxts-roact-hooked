@@ -1,5 +1,5 @@
 import Roact from "@rbxts/roact";
-import { useReducer } from "@rbxts/roact-hooked";
+import { useReducer, withHookDetection } from "@rbxts/roact-hooked";
 
 interface State {
 	count: number;
@@ -68,6 +68,8 @@ function Counter() {
 }
 
 export = (target: Frame) => {
+	withHookDetection(Roact);
+
 	const handle = Roact.mount(<Counter />, target, "Counter");
 
 	return () => Roact.unmount(handle);

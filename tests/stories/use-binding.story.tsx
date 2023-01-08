@@ -1,5 +1,5 @@
 import Roact from "@rbxts/roact";
-import { useBinding, useEffect } from "@rbxts/roact-hooked";
+import { useBinding, useEffect, withHookDetection } from "@rbxts/roact-hooked";
 
 const RunService = game.GetService("RunService");
 
@@ -24,6 +24,8 @@ function Stopwatch() {
 }
 
 export = (target: Frame) => {
+	withHookDetection(Roact);
+
 	const handle = Roact.mount(<Stopwatch />, target, "Stopwatch");
 
 	return () => Roact.unmount(handle);
