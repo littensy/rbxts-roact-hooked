@@ -28,8 +28,16 @@ local function wrapCreateElement(Roact)
 
 		if hooks.didComponentUseHooks() then
 			-- If the component tried to use hooks, create a proxy component
-			local proxyComponent = if pureComponent then hoc.withHooksPure(component) else hoc.withHooks(component)
+			local proxyComponent
+
+			if pureComponent.isPureComponent(component) then
+				proxyComponent = hoc.withHooksPure(component)
+			else
+				proxyComponent = hoc.withHooks(component)
+			end
+
 			proxyComponents[component] = proxyComponent
+
 			return createElement(proxyComponent, props, children)
 		else
 			-- Mark this component as stateless so we don't have to check it again
