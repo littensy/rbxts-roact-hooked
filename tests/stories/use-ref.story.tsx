@@ -1,7 +1,7 @@
 import Roact from "@rbxts/roact";
-import { useEffect, useRef, withHooks } from "@rbxts/roact-hooked";
+import { useEffect, useRef } from "@rbxts/roact-hooked";
 
-const Clipboard = withHooks(() => {
+function Clipboard() {
 	const ref = useRef<TextBox>();
 
 	useEffect(() => {
@@ -13,7 +13,7 @@ const Clipboard = withHooks(() => {
 	}, []);
 
 	return <textbox Ref={ref} Size={new UDim2(1, 0, 1, 0)} Text="Edit me" TextSize={32} />;
-});
+}
 
 export = (target: Frame) => {
 	const handle = Roact.mount(<Clipboard />, target, "Clipboard");

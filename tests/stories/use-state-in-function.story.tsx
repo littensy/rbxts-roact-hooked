@@ -1,11 +1,11 @@
 import Roact from "@rbxts/roact";
-import { useState, withHooks } from "@rbxts/roact-hooked";
+import { useState } from "@rbxts/roact-hooked";
 
 function useStateButCooler(initialValue: number) {
 	return useState(initialValue);
 }
 
-const Counter = withHooks(() => {
+function Counter() {
 	const [counter1, setCounter1] = useStateButCooler(5);
 	const [counter2, setCounter2] = useStateButCooler(10);
 
@@ -51,7 +51,7 @@ const Counter = withHooks(() => {
 			/>
 		</frame>
 	);
-});
+}
 
 export = (target: Frame) => {
 	const handle = Roact.mount(<Counter />, target, "Counter");

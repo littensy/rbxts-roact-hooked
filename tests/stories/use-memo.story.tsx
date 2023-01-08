@@ -1,7 +1,7 @@
 import Roact from "@rbxts/roact";
-import { useMemo, useState, withHooks } from "@rbxts/roact-hooked";
+import { useMemo, useState } from "@rbxts/roact-hooked";
 
-const WorldsWorstClock = withHooks(() => {
+function WorldsWorstClock() {
 	const [unrelated, setUnrelated] = useState(0);
 	const [updater, setUpdater] = useState(0);
 
@@ -49,7 +49,7 @@ const WorldsWorstClock = withHooks(() => {
 			/>
 		</frame>
 	);
-});
+}
 
 export = (target: Frame) => {
 	const handle = Roact.mount(<WorldsWorstClock />, target, "WorldsWorstClock");

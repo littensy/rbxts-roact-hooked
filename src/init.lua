@@ -1,5 +1,10 @@
 local hoc = require(script.hoc)
 local hooks = require(script.hooks)
+local wrapCreateElement = require(script.wrapCreateElement)
+local Roact = require(script.Roact)
+
+-- Wrap Roact.createElement to support hooks in function components
+wrapCreateElement(Roact)
 
 return {
 	-- HOC

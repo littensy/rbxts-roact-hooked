@@ -1,10 +1,10 @@
 import Roact from "@rbxts/roact";
-import { useEffect, useState, withHooks } from "@rbxts/roact-hooked";
+import { useEffect, useState } from "@rbxts/roact-hooked";
 
-const Counter = withHooks(() => {
+function Counter() {
 	const [state, setState] = useState(1);
 
-	print("Re-rendered: " + state);
+	print("Current State: " + state);
 
 	useEffect(() => {
 		print("The following should not trigger a re-render");
@@ -23,7 +23,7 @@ const Counter = withHooks(() => {
 	}, []);
 
 	return <frame BackgroundTransparency={1} Size={UDim2.fromScale(1, 1)} BackgroundColor3={new Color3()} />;
-});
+}
 
 export = (target: Frame) => {
 	const handle = Roact.mount(<Counter />, target, "Counter");

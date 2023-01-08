@@ -10,6 +10,17 @@ local workInProgressHook
 
 local isReRender
 
+-- Used in wrapCreateElement to determine if this component called a hook
+local didUseHooks = false
+
+local function didComponentUseHooks()
+	return didUseHooks
+end
+
+local function resetDidUseHooks()
+	didUseHooks = false
+end
+
 local function finishHooks()
 	currentlyRenderingComponent = nil
 	hookCount = 0
@@ -28,6 +39,8 @@ local function prepareToUseHooks(componentIdentity)
 end
 
 local function resolveCurrentlyRenderingComponent()
+	didUseHooks = true
+
 	if not currentlyRenderingComponent then
 		error(
 			'Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n' ..
@@ -395,6 +408,8 @@ return {
 	useState = useState,
 
 	-- Internal API
+	didComponentUseHooks = didComponentUseHooks,
+	resetDidUseHooks = resetDidUseHooks,
 	commitHookEffectListUpdate = commitHookEffectListUpdate,
 	commitHookEffectListUnmount = commitHookEffectListUnmount,
 	prepareToUseHooks = prepareToUseHooks,

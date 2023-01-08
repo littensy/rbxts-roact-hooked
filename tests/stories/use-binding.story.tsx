@@ -1,9 +1,9 @@
 import Roact from "@rbxts/roact";
-import { useBinding, useEffect, withHooks } from "@rbxts/roact-hooked";
+import { useBinding, useEffect } from "@rbxts/roact-hooked";
 
 const RunService = game.GetService("RunService");
 
-const Stopwatch = withHooks(() => {
+function Stopwatch() {
 	const [timer, setTimer] = useBinding(0);
 
 	useEffect(() => {
@@ -21,7 +21,7 @@ const Stopwatch = withHooks(() => {
 			TextSize={32}
 		/>
 	);
-});
+}
 
 export = (target: Frame) => {
 	const handle = Roact.mount(<Stopwatch />, target, "Stopwatch");

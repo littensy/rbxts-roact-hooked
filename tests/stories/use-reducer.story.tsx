@@ -1,5 +1,5 @@
 import Roact from "@rbxts/roact";
-import { useReducer, withHooks } from "@rbxts/roact-hooked";
+import { useReducer } from "@rbxts/roact-hooked";
 
 interface State {
 	count: number;
@@ -20,7 +20,7 @@ function reducer({ count }: State, { type: actionType }: Action) {
 	}
 }
 
-const Counter = withHooks(() => {
+function Counter() {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	return (
@@ -65,7 +65,7 @@ const Counter = withHooks(() => {
 			/>
 		</frame>
 	);
-});
+}
 
 export = (target: Frame) => {
 	const handle = Roact.mount(<Counter />, target, "Counter");

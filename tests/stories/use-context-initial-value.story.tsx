@@ -1,9 +1,9 @@
 import Roact from "@rbxts/roact";
-import { useContext, useState, withHooks } from "@rbxts/roact-hooked";
+import { useContext, useState } from "@rbxts/roact-hooked";
 
 const CounterContext = Roact.createContext({ counter: -1, increment: () => {} });
 
-const Consumer = withHooks((props: { offset: number }) => {
+function Consumer(props: { offset: number }) {
 	const counter = useContext(CounterContext);
 
 	return (
@@ -36,9 +36,9 @@ const Consumer = withHooks((props: { offset: number }) => {
 			/>
 		</frame>
 	);
-});
+}
 
-const App = withHooks(() => {
+function App() {
 	const [counter, setCounter] = useState(5);
 
 	return (
@@ -55,7 +55,7 @@ const App = withHooks(() => {
 			<Consumer offset={150} />
 		</>
 	);
-});
+}
 
 export = (target: Frame) => {
 	const handle = Roact.mount(<App />, target, "Component");
