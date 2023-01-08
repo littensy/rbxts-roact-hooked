@@ -30,11 +30,13 @@ local function withHookDetection(Roact)
 			props = {}
 		end
 
-		hooks.resetDidUseHooks()
+		hooks.prepareHookTest()
 
 		pcall(component, props)
 
-		if hooks.didComponentUseHooks() then
+		local didUseHooks = hooks.finishHookTest()
+
+		if didUseHooks then
 			-- If the component tried to use hooks, create a proxy component
 			local proxyComponent
 
