@@ -179,7 +179,7 @@ export declare function useEffect(callback: () => (() => void) | void, deps?: re
  *
  * @see https://reactjs.org/docs/hooks-reference.html#usememo
  */
-export declare function useMemo<T extends defined>(factory: () => T, deps: readonly unknown[] | undefined): T;
+export declare function useMemo<T>(factory: () => T, deps: readonly unknown[] | undefined): T;
 
 /**
  * `useMutable` returns a mutable object whose `.current` property is initialized to the argument `initialValue`.
