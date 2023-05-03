@@ -55,6 +55,8 @@ local function withHookDetection(Roact)
 			return createElement(component, props, children)
 		end
 	end
+
+	return Roact
 end
 
 return withHookDetection
