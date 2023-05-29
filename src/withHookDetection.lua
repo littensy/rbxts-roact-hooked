@@ -6,9 +6,12 @@ local proxyComponents = {}
 local statelessComponents = {}
 local modulesWithHookDetection = {}
 
-local function withHookDetection(Roact)
+local function withHookDetection(Roact, options)
+	options = options or {}
+
 	local moduleId = tostring(Roact)
 	local createElement = Roact.createElement
+	local forcePureComponent = if options.forcePureComponent ~= nil then options.forcePureComponent else true
 
 	if modulesWithHookDetection[moduleId] then
 		return
@@ -26,13 +29,9 @@ local function withHookDetection(Roact)
 			return createElement(proxyComponents[component], props, children)
 		end
 
-		if props == nil then
-			props = {}
-		end
-
 		hooks.prepareHookTest()
 
-		pcall(component, props)
+		pcall(component, if props ~= nil then props else {})
 
 		local didUseHooks = hooks.finishHookTest()
 
@@ -40,7 +39,7 @@ local function withHookDetection(Roact)
 			-- If the component tried to use hooks, create a proxy component
 			local proxyComponent
 
-			if pureComponent.isPureComponent(component) then
+			if pureComponent.isPureComponent(component) or forcePureComponent then
 				proxyComponent = hoc.withHooksPure(component)
 			else
 				proxyComponent = hoc.withHooks(component)

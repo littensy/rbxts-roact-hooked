@@ -2,6 +2,14 @@ import type Roact from "@rbxts/roact";
 
 // HOCs
 
+interface HookDetectionOptions {
+	/**
+	 * Whether all components should be PureComponents by default.
+	 * @default false
+	 */
+	forcePureComponent?: boolean;
+}
+
 /**
  * Adds additional behavior to `Roact.createElement`, allowing you to use hooks in your components without
  * having to wrap them in `withHooks` or `withHooksPure`. Can be called multiple times safely.
@@ -9,8 +17,11 @@ import type Roact from "@rbxts/roact";
  * @example
  * withHookDetection(Roact);
  * Roact.mount(<MyComponent />, playerGui);
+ *
+ * @param library - The Roact library to add hook detection to
+ * @param options - Options for hook detection
  */
-export declare function withHookDetection(library: typeof Roact): void;
+export declare function withHookDetection(library: typeof Roact, options?: HookDetectionOptions): void;
 
 /**
  * Marks a component as a PureComponent to be used by `wrapCreateElement`.
