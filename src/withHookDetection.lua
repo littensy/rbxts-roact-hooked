@@ -11,7 +11,7 @@ local function withHookDetection(Roact, options)
 
 	local moduleId = tostring(Roact)
 	local createElement = Roact.createElement
-	local forcePureComponent = if options.forcePureComponent ~= nil then options.forcePureComponent else true
+	local forcePureComponent = if options.forcePureComponent ~= nil then options.forcePureComponent else false
 
 	if modulesWithHookDetection[moduleId] then
 		return
