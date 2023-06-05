@@ -8,6 +8,11 @@ interface HookDetectionOptions {
 	 * @default false
 	 */
 	forcePureComponent?: boolean;
+	/**
+	 * If `true`, all function components will receive a MicroProfiler label.
+	 * @default false
+	 */
+	debug?: boolean;
 }
 
 /**

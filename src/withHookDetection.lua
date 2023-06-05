@@ -45,6 +45,22 @@ local function withHookDetection(Roact, options)
 				proxyComponent = hoc.withHooks(component)
 			end
 
+			if options.debug then
+				local render = proxyComponent.render
+
+				function proxyComponent:render(...)
+					debug.profilebegin(self._name)
+					local success, result = pcall(render, self, ...)
+					debug.profileend()
+
+					if not success then
+						error(result, 2)
+					end
+
+					return result
+				end
+			end
+
 			proxyComponents[component] = proxyComponent
 
 			return createElement(proxyComponent, props, children)
