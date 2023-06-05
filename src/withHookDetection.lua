@@ -11,7 +11,9 @@ local function withHookDetection(Roact, options)
 
 	local moduleId = tostring(Roact)
 	local createElement = Roact.createElement
+
 	local forcePureComponent = if options.forcePureComponent ~= nil then options.forcePureComponent else false
+	local debugMode = if options.debug ~= nil then options.debug else false
 
 	if modulesWithHookDetection[moduleId] then
 		return
@@ -45,7 +47,7 @@ local function withHookDetection(Roact, options)
 				proxyComponent = hoc.withHooks(component)
 			end
 
-			if options.debug then
+			if debugMode then
 				local render = proxyComponent.render
 
 				function proxyComponent:render(...)
