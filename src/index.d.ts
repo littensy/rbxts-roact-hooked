@@ -26,7 +26,7 @@ interface HookDetectionOptions {
  * @param library - The Roact library to add hook detection to
  * @param options - Options for hook detection
  */
-export declare function withHookDetection(library: typeof Roact, options?: HookDetectionOptions): void;
+export declare function withHookDetection(library: typeof Roact, options?: HookDetectionOptions): typeof Roact;
 
 /**
  * Marks a component as a PureComponent to be used by `wrapCreateElement`.
