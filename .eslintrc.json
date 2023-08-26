@@ -28,6 +28,7 @@
 				"tabWidth": 4,
 				"useTabs": true
 			}
-		]
+		],
+		"@typescript-eslint/no-explicit-any": "off"
 	}
 }
