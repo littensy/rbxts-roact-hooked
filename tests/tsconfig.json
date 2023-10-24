@@ -21,18 +21,12 @@
 			"@rbxts/roact-hooked": ["../src"],
 			"@rbxts/roact-hooked/*": ["../src/*"]
 		},
-		"rootDirs": [
-			"stories",
-			"../src",
-		],
+		"rootDirs": ["stories", "../src"],
 		"outDir": "dist",
 		"baseUrl": ".",
 		"incremental": true,
 		//"tsBuildInfoFile": "out/tsconfig.tsbuildinfo",
 		"declaration": true
 	},
-	"include": [
-		"**/*",
-		"../src/**/*"
-	]
+	"include": ["**/*", "../src/**/*"]
 }

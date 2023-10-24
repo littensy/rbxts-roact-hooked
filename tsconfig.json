@@ -24,7 +24,5 @@
 		"tsBuildInfoFile": "out/tsconfig.tsbuildinfo",
 		"declaration": true
 	},
-	"exclude": [
-		"tests/**/*"
-	]
+	"exclude": ["tests/**/*"]
 }

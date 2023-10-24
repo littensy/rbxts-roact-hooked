@@ -1,10 +1,6 @@
 {
 	"name": "RoactHooks",
-	"globIgnorePaths": [
-		"src/stories/",
-		"**/package.json",
-		"**/tsconfig.json"
-	],
+	"globIgnorePaths": ["src/stories/", "**/package.json", "**/tsconfig.json"],
 	"tree": {
 		"$path": "src"
 	}

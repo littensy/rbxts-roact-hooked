@@ -34,7 +34,9 @@ local function prepareToUseHooks(componentIdentity)
 	if workInProgressHook ~= nil then
 		local prev = currentlyRenderingComponent._name
 		local current = componentIdentity._name
-		warn("The component '" .. prev .. "' did not finish rendering before '" .. current .. "' started rendering. Did the former yield or fail to run?")
+		warn(
+			`The component '{prev}' did not finish rendering before '{current}' started rendering. Did the former yield or fail to run?`
+		)
 		finishHooks()
 	end
 
@@ -46,10 +48,10 @@ local function resolveCurrentlyRenderingComponent()
 
 	if forceEarlyExit or not currentlyRenderingComponent then
 		error(
-			'Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n' ..
-			'1. You might be using hooks outside of the withHooks() HOC\n' ..
-			'2. You might be breaking the Rules of Hooks\n' ..
-			'3. A hooked component may have yielded or thrown an error\n'
+			"Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:\n"
+				.. "1. You might be using hooks outside of the withHooks() HOC\n"
+				.. "2. You might be breaking the Rules of Hooks\n"
+				.. "3. A hooked component may have yielded or thrown an error\n"
 		)
 	end
 
@@ -213,7 +215,7 @@ local function useEffect(create, deps)
 	resolveCurrentlyRenderingComponent()
 
 	local hook = createWorkInProgressHook()
-	
+
 	if not isReRender then
 		hook.memoizedState = pushEffect(create, nil, deps)
 	else
@@ -330,7 +332,7 @@ end
 
 local function useBinding(initialValue)
 	resolveCurrentlyRenderingComponent()
-	
+
 	local hook = createWorkInProgressHook()
 
 	if not isReRender then
@@ -350,7 +352,7 @@ local function useContext(context)
 		-- Using https://github.com/Kampfkarren/roact-hooks/pull/38
 		local memoizedState = {
 			fakeConsumer = setmetatable({}, {
-				__index = currentlyRenderingComponent
+				__index = currentlyRenderingComponent,
 			}),
 			initialValue = nil,
 		}
