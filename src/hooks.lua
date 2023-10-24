@@ -147,7 +147,7 @@ local function commitHookEffectListUpdate(componentIdentity)
 		local destroy = effect.destroy
 		effect.destroy = nil
 
-		if destroy then
+		if type(destroy) == "function" then
 			NoYield(destroy)
 		end
 
@@ -175,7 +175,7 @@ local function commitHookEffectListUnmount(componentIdentity)
 		local destroy = effect.destroy
 		effect.destroy = nil
 
-		if destroy then
+		if type(destroy) == "function" then
 			NoYield(destroy)
 		end
 
@@ -266,8 +266,6 @@ local function useReducer(reducer, initialArg, init)
 			component:setState({
 				[hook.index] = nextState,
 			})
-
-			return nextState
 		end
 
 		hook.memoizedState = {
